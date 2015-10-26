@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "FBListViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,20 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    // Création de la liste d'items
+    FBListViewController *listViewController = [[FBListViewController alloc] init];
+    
+    // Création du controlleur de navigation. Celui ci affiche le dernier ViewController dans sa pile de navigation
+    // Le premier élément de cette pile est le ListViewController que l'on a créé au dessus
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:listViewController];
+    
+    // Création de la fenetre pour que celle ci ai un fond blanc, prenne tout l'écran principal, affiche le controlleur de navigation, et devienne principale (et visible)
+    self.window = [[UIWindow alloc] init];
+    [self.window setBackgroundColor:[UIColor whiteColor]];
+    [self.window setFrame:[[UIScreen mainScreen] bounds]];
+    [self.window setRootViewController:navigationController];
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

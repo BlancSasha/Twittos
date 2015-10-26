@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  FBDetailsViewController.h
 //  Twittos
 //
 //  Created by François Blanc on 26/10/2015.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface FBDetailsViewController : UIViewController
 
+@property (nonatomic, strong) NSString *tweet;
 
 @end
-

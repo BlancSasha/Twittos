@@ -9,9 +9,10 @@
 /* Begin PBXBuildFile section */
 		C9766C211BDE9EF00055ECEA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9766C201BDE9EF00055ECEA /* main.m */; };
 		C9766C241BDE9EF00055ECEA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9766C231BDE9EF00055ECEA /* AppDelegate.m */; };
-		C9766C271BDE9EF00055ECEA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9766C261BDE9EF00055ECEA /* ViewController.m */; };
 		C9766C2C1BDE9EF00055ECEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9766C2B1BDE9EF00055ECEA /* Assets.xcassets */; };
 		C9766C2F1BDE9EF00055ECEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9766C2D1BDE9EF00055ECEA /* LaunchScreen.storyboard */; };
+		C978BAB01BDEA2A200DA98A7 /* FBListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C978BAAF1BDEA2A200DA98A7 /* FBListViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C978BAB31BDEA2B900DA98A7 /* FBDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C978BAB21BDEA2B900DA98A7 /* FBDetailsViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,11 +20,13 @@
 		C9766C201BDE9EF00055ECEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C9766C221BDE9EF00055ECEA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C9766C231BDE9EF00055ECEA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C9766C251BDE9EF00055ECEA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		C9766C261BDE9EF00055ECEA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		C9766C2B1BDE9EF00055ECEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C9766C2E1BDE9EF00055ECEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C9766C301BDE9EF00055ECEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C978BAAE1BDEA2A200DA98A7 /* FBListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBListViewController.h; sourceTree = "<group>"; };
+		C978BAAF1BDEA2A200DA98A7 /* FBListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBListViewController.m; sourceTree = "<group>"; };
+		C978BAB11BDEA2B900DA98A7 /* FBDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDetailsViewController.h; sourceTree = "<group>"; };
+		C978BAB21BDEA2B900DA98A7 /* FBDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBDetailsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +61,7 @@
 			children = (
 				C9766C221BDE9EF00055ECEA /* AppDelegate.h */,
 				C9766C231BDE9EF00055ECEA /* AppDelegate.m */,
-				C9766C251BDE9EF00055ECEA /* ViewController.h */,
-				C9766C261BDE9EF00055ECEA /* ViewController.m */,
+				C978BAB41BDEA2C300DA98A7 /* GUI */,
 				C9766C2B1BDE9EF00055ECEA /* Assets.xcassets */,
 				C9766C2D1BDE9EF00055ECEA /* LaunchScreen.storyboard */,
 				C9766C301BDE9EF00055ECEA /* Info.plist */,
@@ -74,6 +76,17 @@
 				C9766C201BDE9EF00055ECEA /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C978BAB41BDEA2C300DA98A7 /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				C978BAAE1BDEA2A200DA98A7 /* FBListViewController.h */,
+				C978BAAF1BDEA2A200DA98A7 /* FBListViewController.m */,
+				C978BAB11BDEA2B900DA98A7 /* FBDetailsViewController.h */,
+				C978BAB21BDEA2B900DA98A7 /* FBDetailsViewController.m */,
+			);
+			name = GUI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -102,6 +115,7 @@
 		C9766C141BDE9EF00055ECEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = FB;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "François Blanc";
 				TargetAttributes = {
@@ -145,9 +159,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9766C271BDE9EF00055ECEA /* ViewController.m in Sources */,
 				C9766C241BDE9EF00055ECEA /* AppDelegate.m in Sources */,
+				C978BAB31BDEA2B900DA98A7 /* FBDetailsViewController.m in Sources */,
 				C9766C211BDE9EF00055ECEA /* main.m in Sources */,
+				C978BAB01BDEA2A200DA98A7 /* FBListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

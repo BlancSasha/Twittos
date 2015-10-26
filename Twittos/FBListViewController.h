@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  FBListViewController.h
 //  Twittos
 //
 //  Created by François Blanc on 26/10/2015.
@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
+@interface FBListViewController : UIViewController
 
 @end
-
