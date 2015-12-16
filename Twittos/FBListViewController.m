@@ -52,6 +52,8 @@
     self.navigationItem.rightBarButtonItem = self.updateButton;
     //[self.updateButton release]; pas nécessaire?
     
+    self.tweetManager = [[FBTweetManager alloc] init];
+    
     [self loadTweets];
     
 }

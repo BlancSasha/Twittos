@@ -19,7 +19,7 @@
 #define CONSUMER_SECRET @"lAlkRvL3aZFJjgnzbDxLQPvOADy1ZGAs9ocFTnQSwIYFNKK112"
 #define TWEETS_COUNT 20
 
-@interface FBTweetManager () // pourquoi a-t-on besoin des parenthèses?
+@interface FBTweetManager ()
 
 @property (nonatomic, strong) NSString *bearerToken;
 
