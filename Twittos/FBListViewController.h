@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "FBTweetManager.h"
+
+#import "FBTweet.h"
+
 @interface FBListViewController : UIViewController
 
 @end

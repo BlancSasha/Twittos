@@ -10,4 +10,10 @@
 
 @interface FBTweetManager : NSObject
 
+- (void) fetchTweetswithBlock:(void(^)(NSArray *,NSError *))block;
+
+- (void) authenticationWithencoded64authorizationHeader:(NSString *)encoded64authorizationHeader
+                                               andBlock:(void(^)(NSString *,NSError *))authentBlock;
+
+
 @end

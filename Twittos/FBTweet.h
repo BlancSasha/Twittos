@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FBTweet : NSObject
+#import "Mantle.h"
+
+@interface FBTweet : MTLModel <MTLJSONSerializing>
+
+@property (strong, nonatomic) NSString *descr;
 
 @end

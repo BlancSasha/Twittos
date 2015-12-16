@@ -10,4 +10,10 @@
 
 @implementation FBTweet
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             @"description": @"descr",
+             };
+}
+
 @end

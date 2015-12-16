@@ -9,12 +9,19 @@
 #import "FBListViewController.h"
 #import "FBDetailsViewController.h"
 
+#import <JGProgressHUD/JGProgressHUD.h>
+
 // FBListViewController se conforme à ces deux protocoles car il veut etre appelé par le tableView quand celui ci a besoin d'informations sur ce qu'il doit afficher, et veut informer qu'une interaction utilisateur est arrivée
 @interface FBListViewController () <UITableViewDataSource, UITableViewDelegate>
 // TableView
 @property (atomic,    strong) UITableView *tableView;
 // Liste de données
 @property (nonatomic, strong) NSArray *tweets;
+
+@property (nonatomic, strong) FBTweetManager *tweetManager;
+
+@property (nonatomic, strong) UIBarButtonItem *updateButton;
+
 @end
 
 @implementation FBListViewController
@@ -23,9 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setTitle:@"List"];
-    
-    self.tweets = @[@"Item 1", @"Plop", @"Zou", @"Bi", @"Da"];
-    
+        
     // Création du tableView
     self.tableView = [[UITableView alloc] init];
     // dimensionnement à la taille de l'écran
@@ -38,6 +43,39 @@
     [self.tableView setDelegate:self];
     // Ajout du tableView à l'écran
     [self.view addSubview:self.tableView];
+    
+    
+    //Création du bouton de mise à jour
+    self.updateButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+                                                                      target:self
+                                                                      action:@selector(loadTweets)];
+    self.navigationItem.rightBarButtonItem = self.updateButton;
+    //[self.updateButton release]; pas nécessaire?
+    
+    [self loadTweets];
+    
+}
+
+- (void)loadTweets
+{
+    JGProgressHUD *HUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleDark];
+    HUD.textLabel.text = @"Loading";
+    [HUD showInView:self.view];
+    
+    [self.tweetManager fetchTweetswithBlock:^(NSArray *tweets, NSError *error) {
+        
+        if (error)
+        {
+            NSLog(@"Error %@; %@", error, [error localizedDescription]);
+        }
+        else
+        {
+            [self setTweets:tweets];
+        }
+    }];
+    
+    [HUD dismiss];
+
 }
 
 - (void)setTweets:(NSArray *)tweets
@@ -59,13 +97,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Récupération du tweet
-    NSString *tweet = self.tweets[indexPath.row];
+    FBTweet *tweet = self.tweets[indexPath.row]; // Pourquoi changer le type. Un tweet est bien une string.
     
+    NSString *tweetDescription = tweet.descr;
     // On demande au tableView une cellule disponible avec l'identifiant "cell"
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     // On met à jour les éléments affichés par la cellule à l'aide de l'objet Tweet que l'on veut représenter
-    [cell.textLabel setText:tweet];
+    [cell.textLabel setText:tweetDescription];
     
     // On retourne la cellule au tableView pour qu'il puisse l'afficher
     return cell;
@@ -74,13 +113,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Récupération du tweet associé à la cellule qui vient d'etre sélectionnée
-    NSString *tweet = self.tweets[indexPath.row];
+    FBTweet *tweet = self.tweets[indexPath.row]; // Ation
     
+    NSString *tweetDescription = tweet.descr;
     // Création du VC qui va afficher les détails de ce tweet
     FBDetailsViewController *detailViewController = [[FBDetailsViewController alloc] init];
     
     // On dit au VC de détails quel tweet il va afficher
-    [detailViewController setTweet:tweet];
+    [detailViewController setTweet:tweetDescription];
     
     // On ajoute le VC de détail sur la pile de navigation, ce qui demande au navigationController de l'afficher à la place du VC actuel
     [self.navigationController pushViewController:detailViewController animated:YES];
