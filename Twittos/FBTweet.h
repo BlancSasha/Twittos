@@ -12,6 +12,7 @@
 
 @interface FBTweet : MTLModel <MTLJSONSerializing>
 
-@property (strong, nonatomic) NSString *descr;
+@property (strong, nonatomic) NSString *text;
+@property (strong, nonatomic) NSString *user;
 
 @end

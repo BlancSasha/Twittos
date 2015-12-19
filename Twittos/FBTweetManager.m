@@ -34,9 +34,9 @@
 {
     self = [super init];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+    self.manager = [AFHTTPRequestOperationManager manager];
+    [self.manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     
     return self;
 }
@@ -57,14 +57,17 @@
         }
         else
         {
-            NSDictionary *getHeaders = @{ @"Authorization":[NSString stringWithFormat:@"Bearer %@", self.bearerToken]};
-            
+            //NSDictionary *getHeaders = @{ @"Authorization":[NSString stringWithFormat:@"Bearer %@", self.bearerToken]};
+            NSString *getHeader = [[NSString alloc] initWithFormat:@"Bearer %@",self.bearerToken];
             
             NSDictionary *getParameters = @{@"screen_name":@"syan_me",
                                             @"count":@(TWEETS_COUNT),
                                             };
             
-            [[self.manager.requestSerializer HTTPRequestHeaders] setValuesForKeysWithDictionary:getHeaders];
+            //[[self.manager.requestSerializer HTTPRequestHeaders] setValuesForKeysWithDictionary:getHeaders];
+            
+            [self.manager.requestSerializer setValue:getHeader forHTTPHeaderField:@"Authorization"];
+
             
             [self.manager GET:@"https://api.twitter.com/1.1/statuses/user_timeline.json"
                    parameters:getParameters
@@ -73,12 +76,13 @@
                           NSLog(@"JSON : %@",responseObject);
                           
                           NSArray *tweets = [[NSArray alloc]init];
+                         // tweets = responseObject;
                           NSError *err = nil;
                           
-                          NSArray *results = responseObject[@"results"]; // Nécessaire? Afficher un résultat JSON pour savoir
-                          NSLog(@"Count %d", (int)results.count);
+                          //NSArray *results = responseObject[@"results"]; // Nécessaire? Afficher un résultat JSON pour savoir
+                         // NSLog(@"Count %d", (int)responseObject.count);
                           
-                          tweets = [MTLJSONAdapter modelsOfClass:[FBTweet class] fromJSONArray:results error:&err];
+                          tweets = [MTLJSONAdapter modelsOfClass:[FBTweet class] fromJSONArray:responseObject error:&err];
                           
                           if (err)
                               block(nil,err);
@@ -96,24 +100,29 @@
 - (void) authenticationWithencoded64authorizationHeader:(NSString *)encoded64authorizationHeader
                                                andBlock:(void(^)(NSString *,NSError *))authentBlock{
 
-    NSDictionary *postHeaders = @{@"Authorization":[NSString stringWithFormat:@"Basic %@", encoded64authorizationHeader]};
+    NSString *postHeader = [[NSString alloc] initWithFormat:@"Basic %@",encoded64authorizationHeader];
     
     NSDictionary *postParameters = @{@"grant_type":@"client_credentials"};
     
-    [[self.manager.requestSerializer HTTPRequestHeaders] setValuesForKeysWithDictionary:postHeaders];
+   // [[self.manager.requestSerializer HTTPRequestHeaders] setValuesForKeysWithDictionary:postHeaders];
+    
+    [self.manager.requestSerializer setValue:postHeader forHTTPHeaderField:@"Authorization"];
     
     [self.manager POST:@"https://api.twitter.com/oauth2/token" parameters:postParameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         
         NSLog(@"JSON : %@",responseObject);
         
+        
         if ([[responseObject valueForKey:@"token_type"] isEqual:@"bearer"]){
             self.bearerToken = [responseObject valueForKey:@"access_token"];
         }
+        authentBlock(self.bearerToken,nil);
+
         
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
         
         NSLog(@"Error : %@",error);
-        
+        authentBlock (nil,error);
     }];
 
     

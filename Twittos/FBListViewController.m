@@ -52,7 +52,7 @@
     self.navigationItem.rightBarButtonItem = self.updateButton;
     //[self.updateButton release]; pas nécessaire?
     
-    self.tweetManager = [[FBTweetManager alloc] init];
+    _tweetManager = [[FBTweetManager alloc] init];
     
     [self loadTweets];
     
@@ -69,15 +69,16 @@
         if (error)
         {
             NSLog(@"Error %@; %@", error, [error localizedDescription]);
+                    [HUD dismiss];
         }
         else
         {
             [self setTweets:tweets];
+                    [HUD dismiss];
         }
+        
+        //[HUD dismiss];
     }];
-    
-    [HUD dismiss];
-
 }
 
 - (void)setTweets:(NSArray *)tweets
@@ -101,7 +102,7 @@
     // Récupération du tweet
     FBTweet *tweet = self.tweets[indexPath.row]; // Pourquoi changer le type. Un tweet est bien une string.
     
-    NSString *tweetDescription = tweet.descr;
+    NSString *tweetDescription = tweet.text;
     // On demande au tableView une cellule disponible avec l'identifiant "cell"
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
@@ -117,7 +118,7 @@
     // Récupération du tweet associé à la cellule qui vient d'etre sélectionnée
     FBTweet *tweet = self.tweets[indexPath.row]; // Ation
     
-    NSString *tweetDescription = tweet.descr;
+    NSString *tweetDescription = tweet.text;
     // Création du VC qui va afficher les détails de ce tweet
     FBDetailsViewController *detailViewController = [[FBDetailsViewController alloc] init];
     

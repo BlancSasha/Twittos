@@ -12,8 +12,15 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"description": @"descr",
+             @"user":@"user.description",
+             @"text":@"text",
              };
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: %p, text: %@, user: %@>",
+            self.class, self, self.text, self.user];
 }
 
 @end
