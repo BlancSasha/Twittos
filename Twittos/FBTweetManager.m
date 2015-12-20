@@ -75,14 +75,9 @@
                           
                           NSLog(@"JSON : %@",responseObject);
                           
-                          NSArray *tweets = [[NSArray alloc]init];
-                         // tweets = responseObject;
                           NSError *err = nil;
                           
-                          //NSArray *results = responseObject[@"results"]; // Nécessaire? Afficher un résultat JSON pour savoir
-                         // NSLog(@"Count %d", (int)responseObject.count);
-                          
-                          tweets = [MTLJSONAdapter modelsOfClass:[FBTweet class] fromJSONArray:responseObject error:&err];
+                          NSArray *tweets = [MTLJSONAdapter modelsOfClass:[FBTweet class] fromJSONArray:responseObject error:&err];
                           
                           if (err)
                               block(nil,err);

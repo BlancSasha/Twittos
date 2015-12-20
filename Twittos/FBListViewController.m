@@ -11,6 +11,8 @@
 
 #import <JGProgressHUD/JGProgressHUD.h>
 
+#import "FBTweetCell.h"
+
 // FBListViewController se conforme à ces deux protocoles car il veut etre appelé par le tableView quand celui ci a besoin d'informations sur ce qu'il doit afficher, et veut informer qu'une interaction utilisateur est arrivée
 @interface FBListViewController () <UITableViewDataSource, UITableViewDelegate>
 // TableView
@@ -36,7 +38,7 @@
     // dimensionnement à la taille de l'écran
     [self.tableView setFrame:self.view.bounds];
     // Définition du type de cellule que l'on souhaite utiliser. Ici des cellules basiques, que l'on demandera avec l'identifiant "cell"
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:FBTweetCell.class forCellReuseIdentifier:@"cell"];
     // Lorsque le tableView a besoin de données, il fait appel à moi
     [self.tableView setDataSource:self];
     // Lorsque le tableView veut me fournir des informations (action utilisateur par exemple), il les donne à moi
@@ -100,14 +102,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Récupération du tweet
-    FBTweet *tweet = self.tweets[indexPath.row]; // Pourquoi changer le type. Un tweet est bien une string.
+    FBTweet *tweet = self.tweets[indexPath.row];
     
-    NSString *tweetDescription = tweet.text;
     // On demande au tableView une cellule disponible avec l'identifiant "cell"
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    FBTweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     // On met à jour les éléments affichés par la cellule à l'aide de l'objet Tweet que l'on veut représenter
-    [cell.textLabel setText:tweetDescription];
+    [cell setTweet:tweet];
     
     // On retourne la cellule au tableView pour qu'il puisse l'afficher
     return cell;
@@ -127,6 +128,16 @@
     
     // On ajoute le VC de détail sur la pile de navigation, ce qui demande au navigationController de l'afficher à la place du VC actuel
     [self.navigationController pushViewController:detailViewController animated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
 }
 
 @end

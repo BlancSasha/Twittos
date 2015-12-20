@@ -7,6 +7,8 @@
 //
 
 #import "FBTweet.h"
+#import "FBTweetLink.h"
+#import <Mantle/NSValueTransformer+MTLPredefinedTransformerAdditions.h>
 
 @implementation FBTweet
 
@@ -14,13 +16,25 @@
     return @{
              @"user":@"user.description",
              @"text":@"text",
+             @"name":@"user.name",
+             @"screenName":@"user.screen_name",
+             @"retweetCount":@"retweet_count",
+             @"likes":@"favorite_count",
+             @"tweetLinks":@"entities.user_mentions",
+             @"retweetedStatus":@"retweeted_status"
              };
 }
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p, text: %@, user: %@>",
-            self.class, self, self.text, self.user];
+    return [NSString stringWithFormat:@"<%@: %p, text: %@, user: %@, retweetCount: %i, likes : %i, name: %@,  screenName: %@, tweetLinks : %@>",
+            self.class, self, self.text, self.user, self.retweetCount, self.likes, self.name, self.screenName, self.tweetLinks];
+}
+
++ (NSValueTransformer *)tweetLinksJSONTransformer
+{
+    return [MTLJSONAdapter arrayTransformerWithModelClass:[FBTweetLink class]];
 }
 
 @end
+
