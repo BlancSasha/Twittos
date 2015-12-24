@@ -11,6 +11,7 @@
 #import "Mantle.h"
 
 @class FBTweetLink;
+@class FBUser;
 
 @interface FBTweet : MTLModel <MTLJSONSerializing>
 
@@ -20,9 +21,12 @@
 @property (nonatomic) NSInteger likes;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *screenName;
+@property (strong, nonatomic) NSArray *coordinates;
 
 @property (strong, nonatomic) NSArray *tweetLinks;
 
 @property (strong, nonatomic) FBTweet *retweetedStatus;
+@property (strong, nonatomic) FBUser *tweetUser;
+@property (strong, nonatomic) FBUser *retweetUser;
 
 @end

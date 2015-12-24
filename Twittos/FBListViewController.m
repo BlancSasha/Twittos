@@ -20,8 +20,6 @@
 // Liste de données
 @property (nonatomic, strong) NSArray *tweets;
 
-@property (nonatomic, strong) FBTweetManager *tweetManager;
-
 @property (nonatomic, strong) UIBarButtonItem *updateButton;
 
 @end
@@ -53,9 +51,7 @@
                                                                       action:@selector(loadTweets)];
     self.navigationItem.rightBarButtonItem = self.updateButton;
     //[self.updateButton release]; pas nécessaire?
-    
-    _tweetManager = [[FBTweetManager alloc] init];
-    
+
     [self loadTweets];
     
 }
@@ -66,20 +62,20 @@
     HUD.textLabel.text = @"Loading";
     [HUD showInView:self.view];
     
-    [self.tweetManager fetchTweetswithBlock:^(NSArray *tweets, NSError *error) {
+    [[FBTweetManager sharedManager] fetchTweetswithBlock:^(NSArray *tweets, NSError *error) {
         
         if (error)
         {
             NSLog(@"Error %@; %@", error, [error localizedDescription]);
-                    [HUD dismiss];
+                    //[HUD dismiss];
         }
         else
         {
             [self setTweets:tweets];
-                    [HUD dismiss];
+                    //[HUD dismiss];
         }
         
-        //[HUD dismiss];
+        [HUD dismiss];
     }];
 }
 
@@ -119,12 +115,11 @@
     // Récupération du tweet associé à la cellule qui vient d'etre sélectionnée
     FBTweet *tweet = self.tweets[indexPath.row]; // Ation
     
-    NSString *tweetDescription = tweet.text;
     // Création du VC qui va afficher les détails de ce tweet
     FBDetailsViewController *detailViewController = [[FBDetailsViewController alloc] init];
     
     // On dit au VC de détails quel tweet il va afficher
-    [detailViewController setTweet:tweetDescription];
+    [detailViewController setTweet:tweet];
     
     // On ajoute le VC de détail sur la pile de navigation, ce qui demande au navigationController de l'afficher à la place du VC actuel
     [self.navigationController pushViewController:detailViewController animated:YES];

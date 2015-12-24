@@ -18,10 +18,13 @@
              @"text":@"text",
              @"name":@"user.name",
              @"screenName":@"user.screen_name",
+             @"coordinates":@"place.bounding_box.coordinates",
              @"retweetCount":@"retweet_count",
              @"likes":@"favorite_count",
              @"tweetLinks":@"entities.user_mentions",
-             @"retweetedStatus":@"retweeted_status"
+             @"retweetedStatus":@"retweeted_status",
+             @"tweetUser":@"user",
+             @"retweetUser":@"retweeted_status.user"
              };
 }
 

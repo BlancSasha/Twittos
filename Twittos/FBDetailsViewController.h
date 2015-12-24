@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FBDetailsViewController : UIViewController
 
-@property (nonatomic, strong) NSString *tweet;
+@class CLLocation;
+@class FBTweet;
+@class FBUser;
+
+@interface FBDetailsViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+@property (strong, nonatomic) FBTweet *tweet;
+@property (strong, nonatomic) FBUser *userDetails;
+
+- (void)setTweet:(FBTweet *)tweet;
 
 @end

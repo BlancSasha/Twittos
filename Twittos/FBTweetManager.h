@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class UIImage;
+
 @interface FBTweetManager : NSObject
 
 - (void) fetchTweetswithBlock:(void(^)(NSArray *,NSError *))block;
@@ -15,5 +17,8 @@
 - (void) authenticationWithencoded64authorizationHeader:(NSString *)encoded64authorizationHeader
                                                andBlock:(void(^)(NSString *,NSError *))authentBlock;
 
+- (void) downloadImageWithURL:(NSString *)imageURL withBlock:(void(^)(UIImage *,NSError *))imageBlock;
+
++ (instancetype)sharedManager;
 
 @end

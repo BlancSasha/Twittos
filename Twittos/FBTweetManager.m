@@ -15,6 +15,8 @@
 
 #import "Mantle.h"
 
+#import <UIKit/UIKit.h>
+
 #define CONSUMER_KEY @"VFCRLhL28sUUEKcPgR6WJ6Sib"
 #define CONSUMER_SECRET @"lAlkRvL3aZFJjgnzbDxLQPvOADy1ZGAs9ocFTnQSwIYFNKK112"
 #define TWEETS_COUNT 20
@@ -25,6 +27,9 @@
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
+@property (nonatomic, strong) AFHTTPRequestOperationManager *imageManager;
+
+
 @end
 
 
@@ -34,12 +39,27 @@
 {
     self = [super init];
     
-    self.manager = [AFHTTPRequestOperationManager manager];
-    [self.manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
-    
+    if(self){
+        self.manager = [AFHTTPRequestOperationManager manager];
+        [self.manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+        [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+        
+        self.imageManager = [AFHTTPRequestOperationManager manager];
+        [self.imageManager setResponseSerializer:[AFImageResponseSerializer serializer]];
+        [self.imageManager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+    }
     return self;
 }
+
++ (instancetype)sharedManager{
+    static dispatch_once_t onceToken;
+    static FBTweetManager *sharedTweetManager;
+    dispatch_once(&onceToken, ^{
+        sharedTweetManager = [[FBTweetManager alloc] init];
+    });
+    return sharedTweetManager;
+}
+
 
 - (void) fetchTweetswithBlock:(void(^)(NSArray *,NSError *))block
 {
@@ -73,7 +93,7 @@
                    parameters:getParameters
                       success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
                           
-                          NSLog(@"JSON : %@",responseObject);
+                          NSLog(@"JSON : %@",operation.responseString);
                           
                           NSError *err = nil;
                           
@@ -121,6 +141,21 @@
     }];
 
     
+}
+
+- (void) downloadImageWithURL:(NSString *)imageURL withBlock:(void(^)(UIImage *,NSError *))imageBlock{
+    [self.imageManager GET:imageURL
+                parameters:nil
+                   success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
+    {
+        NSLog(@"%@",responseObject);
+        imageBlock(responseObject,nil);
+                       
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error)
+    {
+        NSLog(@"%@",error);
+        imageBlock(nil,error);
+    }];
 }
 
 @end

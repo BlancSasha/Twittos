@@ -57,21 +57,32 @@
     if(tweet.retweetedStatus){
     attrText = [attrText initWithString:tweet.retweetedStatus.text
                   attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+        for (FBTweetLink *tweetLink in tweet.retweetedStatus.tweetLinks)
+        {
+            NSInteger start = [tweetLink.indices[0] integerValue];
+            NSInteger end = [tweetLink.indices[1] integerValue];
+            NSInteger length = end - start;
+            
+            [attrText addAttribute:NSForegroundColorAttributeName
+                             value:[UIColor blueColor]
+                             range:NSMakeRange(start,length)];
+        }
     }else{
     attrText = [attrText initWithString:tweet.text
                              attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+        for (FBTweetLink *tweetLink in tweet.tweetLinks)
+        {
+            NSInteger start = [tweetLink.indices[0] integerValue];
+            NSInteger end = [tweetLink.indices[1] integerValue];
+            NSInteger length = end - start;
+            
+            [attrText addAttribute:NSForegroundColorAttributeName
+                             value:[UIColor blueColor]
+                             range:NSMakeRange(start,length)];
+        }
     }
     
-    for (FBTweetLink *tweetLink in tweet.tweetLinks)
-    {
-        NSInteger start = [tweetLink.indices[0] integerValue];
-        NSInteger end = [tweetLink.indices[1] integerValue];
-        NSInteger length = end - start;
-        
-        [attrText addAttribute:NSForegroundColorAttributeName
-                     value:[UIColor blueColor]
-                     range:NSMakeRange(start,length)];
-    }
+
     
     NSMutableAttributedString *attrTweet = [[NSMutableAttributedString alloc] init];
     [attrTweet appendAttributedString:attrName];
