@@ -18,6 +18,7 @@
              @"userDescription":@"description",
              @"userWebSite":@"url",
              @"userImageURL":@"profile_image_url_https",
+             @"userBackgroundImageURL":@"profile_background_image_url_https",
              @"userID":@"id",
              @"userFollowersCount":@"followers_count",
              @"userFriendsCount":@"friends_count",

@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSString *userDescription;
 @property (strong, nonatomic) NSString *userWebSite;
 @property (strong, nonatomic) NSString *userImageURL;
+@property (strong, nonatomic) NSString *userBackgroundImageURL;
 
 @property (nonatomic) NSInteger userID;
 @property (nonatomic) NSInteger userFollowersCount;

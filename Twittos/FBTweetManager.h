@@ -17,7 +17,8 @@
 - (void) authenticationWithencoded64authorizationHeader:(NSString *)encoded64authorizationHeader
                                                andBlock:(void(^)(NSString *,NSError *))authentBlock;
 
-- (void) downloadImageWithURL:(NSString *)imageURL withBlock:(void(^)(UIImage *,NSError *))imageBlock;
+- (void) downloadImageWithURL:(NSString *)imageURL withBlock:(void(^)(UIImage *,NSString *,NSError *))imageBlock;
+
 
 + (instancetype)sharedManager;
 

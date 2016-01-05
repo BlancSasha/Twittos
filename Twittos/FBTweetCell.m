@@ -12,10 +12,15 @@
 
 #import "FBTweet.h"
 #import "FBTweetLink.h"
+#import "FBTweetManager.h"
+#import "FBUser.h"
+#import "FBImageManager.h"
 
-@interface FBTweetCell ()
+
+@interface FBTweetCell () <FBImageManagerDelegate>
 
 @property (strong, nonatomic) UILabel *tweetLabel;
+@property (strong, nonatomic) UIImageView *userImageView;
 
 @end
 
@@ -26,6 +31,18 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        [[FBImageManager sharedInstance] addDelegate:self];
+        
+        self.userImageView = [[UIImageView alloc] init];
+        [self.userImageView setBackgroundColor:[UIColor grayColor]];
+        [self.contentView addSubview:self.userImageView];
+        [self.userImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@10);
+            make.left.equalTo(@10);
+            make.height.equalTo(@24);
+            make.width.equalTo(@24);
+        }];
+        
         self.tweetLabel = [[UILabel alloc] init];
         [self.contentView addSubview:self.tweetLabel];
         self.tweetLabel.numberOfLines = 0;
@@ -33,14 +50,24 @@
         [self.tweetLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(@10);
             make.bottom.equalTo(@(-10));
-            make.left.equalTo(@10);
+            make.left.equalTo(self.userImageView.mas_right).offset(10);
             make.right.equalTo(@(-10));
         }];
+        
+
+        
     }
     return self;
 }
 
+-(void)dealloc
+{
+    [[FBImageManager sharedInstance] removeDelegate:self];
+}
+
 -(void) setTweet:(FBTweet *)tweet{
+    
+    self->_tweet = tweet;
     
     
     NSAttributedString *attrName =
@@ -82,7 +109,11 @@
         }
     }
     
-
+    UIImage *image = [[FBImageManager sharedInstance] getImage:FBTweetImageUserForTableview inCacheForTweet:tweet];
+    if(image!=nil)
+    {
+        [self.userImageView setImage:image];
+    }
     
     NSMutableAttributedString *attrTweet = [[NSMutableAttributedString alloc] init];
     [attrTweet appendAttributedString:attrName];
@@ -92,5 +123,13 @@
     [self.tweetLabel setAttributedText:attrTweet];
 }
 
+
+-(void)didFinishDownloadingImage:(UIImage *)image forURL:(NSString *)URL
+{
+    if([self.tweet.tweetUser.userImageURL isEqualToString:URL])
+    {
+        [self.userImageView setImage:image];
+    }
+}
 
 @end

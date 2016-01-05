@@ -12,6 +12,9 @@
 
 @interface FBTweetCell : UITableViewCell
 
+@property (strong, nonatomic) FBTweet *tweet;
+
 -(void) setTweet:(FBTweet *)tweet;
 
 @end
+

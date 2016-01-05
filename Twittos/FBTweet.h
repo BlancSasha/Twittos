@@ -22,6 +22,8 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *screenName;
 @property (strong, nonatomic) NSArray *coordinates;
+@property (strong, nonatomic) NSDate *tweetDate;
+@property (strong, nonatomic) NSString *tweetImageContentURL;
 
 @property (strong, nonatomic) NSArray *tweetLinks;
 

@@ -24,7 +24,9 @@
              @"tweetLinks":@"entities.user_mentions",
              @"retweetedStatus":@"retweeted_status",
              @"tweetUser":@"user",
-             @"retweetUser":@"retweeted_status.user"
+             @"retweetUser":@"retweeted_status.user",
+             @"tweetDate":@"created_at",
+             //@"tweetImageContentURL":@"entities.media.media_url_https"
              };
 }
 
@@ -37,6 +39,21 @@
 + (NSValueTransformer *)tweetLinksJSONTransformer
 {
     return [MTLJSONAdapter arrayTransformerWithModelClass:[FBTweetLink class]];
+}
+
++ (NSDateFormatter *)dateFormatter {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    dateFormatter.dateFormat = @"EEE MMM dd HH:mm:ss ZZZ yyyy"; //Wed Dec 23 15:52:46 +0000 2015
+    return dateFormatter; 
+}
+
++ (NSValueTransformer *)tweetDateJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *dateString, BOOL *success, NSError *__autoreleasing *error) {
+        return [self.dateFormatter dateFromString:dateString];
+    } reverseBlock:^id(NSDate *date, BOOL *success, NSError *__autoreleasing *error) {
+        return [self.dateFormatter stringFromDate:date];
+    }];
 }
 
 @end

@@ -143,19 +143,20 @@
     
 }
 
-- (void) downloadImageWithURL:(NSString *)imageURL withBlock:(void(^)(UIImage *,NSError *))imageBlock{
+- (void) downloadImageWithURL:(NSString *)imageURL withBlock:(void(^)(UIImage *,NSString *,NSError *))imageBlock{
     [self.imageManager GET:imageURL
                 parameters:nil
                    success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
     {
         NSLog(@"%@",responseObject);
-        imageBlock(responseObject,nil);
+        imageBlock(responseObject,imageURL,nil);
                        
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error)
     {
         NSLog(@"%@",error);
-        imageBlock(nil,error);
+        imageBlock(nil,nil,error);
     }];
 }
+
 
 @end

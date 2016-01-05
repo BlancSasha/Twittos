@@ -10,15 +10,19 @@
 #import "FBUser.h"
 #import "FBTweetManager.h"
 #import "FBTweet.h"
+#import "FBImageManager.h"
 
 #import "Masonry.h"
 #import <MapKit/MapKit.h>
 
 
-@interface FBDetailsViewController ()
+@interface FBDetailsViewController () <MKMapViewDelegate, FBImageManagerDelegate> {
+   // CLLocationCoordinate2D tweetLocation;
+}
 
 @property (strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UIImageView *userImageView;
+@property (strong, nonatomic) UIImageView *userBackGroundImageView;
 @property (strong,nonatomic) UILabel *userDescriptionLabel;
 @property (strong,nonatomic) UILabel *websiteLabel;
 @property (strong, nonatomic) UILabel *followersLabel;
@@ -26,6 +30,8 @@
 @property (strong, nonatomic) MKMapView *mapView;
 
 @property (nonatomic, strong) CLLocation *tweetLocation;
+@property (strong, nonatomic) MKPointAnnotation *tweetLocationAnnot;
+@property (strong, nonatomic) MKPolygon *tweetRegionAnnot;
 
 @end
 
@@ -36,9 +42,8 @@
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    [[FBImageManager sharedInstance] addDelegate:self];
     
-
-
     ////////////////////
     // image view
     ////////////////////
@@ -46,6 +51,15 @@
     self.userImageView = [[UIImageView alloc] init];
     [self.userImageView setBackgroundColor:[UIColor grayColor]];
     [self.view addSubview:self.userImageView];
+    
+    ////////////////////
+    // background image view
+    ////////////////////
+    
+    self.userBackGroundImageView = [[UIImageView alloc] init];
+    [self.userBackGroundImageView setBackgroundColor:[UIColor grayColor]];
+    [self.view addSubview:self.userBackGroundImageView];
+    [self.view sendSubviewToBack:self.userBackGroundImageView];
     
 
     ////////////////////
@@ -98,12 +112,20 @@
     // mapView
     ////////////////////
     
+    //self.tweetLocation = [[CLLocation alloc] init];
     self.mapView = [[MKMapView alloc] init];
+    [self.mapView setDelegate:self];
+    [self updateMapAnnotationsFromArrayOfCoordinates:self.tweet.coordinates];
     [self.view addSubview:self.mapView];
     
 #warning
     [self updateViewConstraints];
     [self fillviews];
+}
+
+-(void)dealloc
+{
+    [[FBImageManager sharedInstance] removeDelegate:self];
 }
 
 - (void)fillviews
@@ -112,15 +134,26 @@
     // image view
     ////////////////////
     
-    [[FBTweetManager sharedManager] downloadImageWithURL:self.userDetails.userImageURL
-                                               withBlock:^(UIImage *image, NSError *error)
+    UIImage *userImage = [[FBImageManager sharedInstance] getImage:FBTweetImageUser
+                                                   inCacheForTweet:self.tweet];
+    if(userImage)
      {
-         if(image){
-             [self.userImageView setImage:image];
-         }
-         
-     }];
+         [self.userImageView setImage:userImage];
+     }
+ 
+    ////////////////////
+    // background image view
+    ////////////////////
     
+    UIImage *backgroundImage = [[FBImageManager sharedInstance] getImage:FBTweetBackgroundImageUser
+                                                         inCacheForTweet:self.tweet];
+    
+    if(backgroundImage)
+    {
+        [self.userBackGroundImageView setImage:backgroundImage];
+    }
+    
+
     ////////////////////
     // nameLabel
     ////////////////////
@@ -206,15 +239,55 @@
 
 }
 
-- (void)mapAnnotationsFromArrayOfCoordinates:(NSArray *)coordinates
+- (void)updateMapAnnotationsFromArrayOfCoordinates:(NSArray *)coordinates
 {
-    if (coordinates.count == 1)
+    NSArray *myCoordinates = coordinates[0];
+    CLLocationCoordinate2D *polygonCoordinates = calloc((myCoordinates.count),sizeof(CLLocationCoordinate2D));
+    double latitude = 0;
+    double longitude = 0;
+    int i = 0;
+    for (NSArray *pointCoordinate in myCoordinates)
     {
+        latitude = latitude + [pointCoordinate[1] doubleValue]/myCoordinates.count;
+        longitude = longitude + [pointCoordinate[0] doubleValue]/myCoordinates.count;
         
-    }else{
+        CLLocationCoordinate2D pointOfPolygon;
+        pointOfPolygon.latitude = [pointCoordinate[1] doubleValue];
+        pointOfPolygon.longitude = [pointCoordinate[0] doubleValue];
         
+        polygonCoordinates[i] = pointOfPolygon;
+        i++;
     }
+    
+    CLLocationCoordinate2D pointLocation;
+    pointLocation.latitude = latitude;
+    pointLocation.longitude = longitude;
+
+    // remove previous annotations
+    [self.mapView removeAnnotation:self.tweetLocationAnnot];
+    [self.mapView removeAnnotation:self.tweetRegionAnnot];
+    self.tweetLocationAnnot = nil;
+    self.tweetRegionAnnot = nil;
+    
+    // create new annotations
+    if (myCoordinates.count >1)
+    {
+        self.tweetRegionAnnot = [MKPolygon polygonWithCoordinates:polygonCoordinates
+                                                            count:myCoordinates.count];
+        [self.mapView addOverlay:self.tweetRegionAnnot];
+    }
+    
+    self.tweetLocationAnnot = [[MKPointAnnotation alloc] init];
+    [self.tweetLocationAnnot setCoordinate:pointLocation];
+    [self.mapView addAnnotation:self.tweetLocationAnnot];
+
+    
+    // recenter and zoom map
+    [self.mapView setCenterCoordinate:pointLocation];
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(pointLocation, 20000, 20000);
+    [self.mapView setRegion:region animated:YES];
 }
+
 
 - (void)updateViewConstraints
 {
@@ -225,6 +298,13 @@
         make.left.equalTo(@10);
         make.height.equalTo(@50);
         make.width.equalTo(@50);
+    }];
+
+    [self.userBackGroundImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_topLayoutGuideBottom).offset(10);
+        make.left.equalTo(@10);
+        make.height.equalTo(@50);
+        make.right.equalTo(@(-10));
     }];
     
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -276,6 +356,31 @@
         self.userDetails = tweet.retweetUser;
     }else{
         self.userDetails = tweet.tweetUser;
+    }
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
+{
+    if ([overlay isKindOfClass:[MKPolygon class]])
+    {
+        MKPolygon *polygon = (MKPolygon *)overlay;
+        MKPolygonView *polygonView = [[MKPolygonView alloc] initWithPolygon:polygon];
+        [polygonView setLineWidth:3];
+        [polygonView setFillColor:[[UIColor blackColor] colorWithAlphaComponent:0.2]];
+        [polygonView setStrokeColor:[UIColor blackColor]];
+        return polygonView;
+    }
+    return nil;
+}
+
+-(void)didFinishDownloadingImage:(UIImage *)image forURL:(NSString *)URL
+{
+    if([self.userDetails.userImageURL isEqualToString:URL])
+    {
+        [self.userImageView setImage:image];
+    }else if ([self.userDetails.userBackgroundImageURL isEqualToString:URL])
+    {
+        [self.userBackGroundImageView setImage:image];
     }
 }
 
