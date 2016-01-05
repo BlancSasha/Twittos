@@ -77,14 +77,12 @@
         }
         else
         {
-            //NSDictionary *getHeaders = @{ @"Authorization":[NSString stringWithFormat:@"Bearer %@", self.bearerToken]};
+
             NSString *getHeader = [[NSString alloc] initWithFormat:@"Bearer %@",self.bearerToken];
             
             NSDictionary *getParameters = @{@"screen_name":@"syan_me",
                                             @"count":@(TWEETS_COUNT),
                                             };
-            
-            //[[self.manager.requestSerializer HTTPRequestHeaders] setValuesForKeysWithDictionary:getHeaders];
             
             [self.manager.requestSerializer setValue:getHeader forHTTPHeaderField:@"Authorization"];
 
@@ -93,7 +91,7 @@
                    parameters:getParameters
                       success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
                           
-                          NSLog(@"JSON : %@",operation.responseString);
+                          //NSLog(@"JSON : %@",operation.responseString);
                           
                           NSError *err = nil;
                           
