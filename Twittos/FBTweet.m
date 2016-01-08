@@ -8,6 +8,7 @@
 
 #import "FBTweet.h"
 #import "FBTweetLink.h"
+#import "FBTweetImage.h"
 #import <Mantle/NSValueTransformer+MTLPredefinedTransformerAdditions.h>
 
 @implementation FBTweet
@@ -26,7 +27,6 @@
              @"tweetUser":@"user",
              @"retweetUser":@"retweeted_status.user",
              @"tweetDate":@"created_at",
-             //@"tweetImageContentURL":@"entities.media.media_url_https"
              };
 }
 
@@ -36,6 +36,20 @@
             self.class, self, self.text, self.user, self.retweetCount, self.likes, self.name, self.screenName, self.tweetLinks];
 }
 
++ (Class)classForParsingJSONDictionary:(NSDictionary *)JSONDictionary {
+    if (JSONDictionary[@"entities.media.media_url_https"] != nil) {
+        return FBTweetImage.class;
+    }
+    
+    //NSAssert(NO, @"No matching class for the JSON dictionary '%@'.", JSONDictionary);
+    return self;
+}
+
+/*+ (NSValueTransformer *)tweetContentImageJSONTransformer
+{
+    return [MTLJSONAdapter dictionaryTransformerWithModelClass:[FBTweetImage class]];
+}*/
+    
 + (NSValueTransformer *)tweetLinksJSONTransformer
 {
     return [MTLJSONAdapter arrayTransformerWithModelClass:[FBTweetLink class]];

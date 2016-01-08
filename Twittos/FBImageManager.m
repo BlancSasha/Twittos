@@ -53,10 +53,10 @@
     
 }
 
-- (UIImage *) getImage:(FBTweetImage)image inCacheForTweet:(FBTweet *)tweet
+- (UIImage *) getImage:(FBTweetImageType)imageType inCacheForTweet:(FBTweet *)tweet
 {
     NSString *key;
-    switch (image) {
+    switch (imageType) {
         case FBTweetImageUserForTableview:
             key = tweet.tweetUser.userImageURL;
             break;

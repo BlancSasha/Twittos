@@ -17,7 +17,7 @@ typedef enum : NSUInteger {
     //FBTweetImageContent,
     FBTweetBackgroundImageUser,
     FBTweetImageUser,
-} FBTweetImage;
+} FBTweetImageType;
 
 @protocol FBImageManagerDelegate <NSObject>
 
@@ -34,7 +34,7 @@ typedef enum : NSUInteger {
 
 - (void) addImageInCache:(UIImage *)image forURLkey:(NSString *)URL;
 
-- (UIImage *)getImage:(FBTweetImage)image inCacheForTweet:(FBTweet *)tweet;
+- (UIImage *)getImage:(FBTweetImageType)imageType inCacheForTweet:(FBTweet *)tweet;
 
 - (void) addDelegate:(id <FBImageManagerDelegate>)delegate;
 

@@ -15,6 +15,7 @@
 #import "FBTweetManager.h"
 #import "FBUser.h"
 #import "FBImageManager.h"
+#import "FBTweetImage.h"
 
 
 @interface FBTweetCell () <FBImageManagerDelegate>
@@ -54,7 +55,10 @@
             make.right.equalTo(@(-10));
         }];
         
-
+        if([self.tweet isMemberOfClass:FBTweetImage.class])
+        {
+            [self setBackgroundColor:[UIColor redColor]];
+        }
         
     }
     return self;
