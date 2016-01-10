@@ -36,14 +36,16 @@
             self.class, self, self.text, self.user, self.retweetCount, self.likes, self.name, self.screenName, self.tweetLinks];
 }
 
-+ (Class)classForParsingJSONDictionary:(NSDictionary *)JSONDictionary {
-    if (JSONDictionary[@"entities.media.media_url_https"] != nil) {
++(Class)classForParsingJSONDictionary:(NSDictionary *)JSONDictionary
+{
+    if (JSONDictionary[@"entities.media.media_url_https"] != nil)
+    {
         return FBTweetImage.class;
     }
     
-    //NSAssert(NO, @"No matching class for the JSON dictionary '%@'.", JSONDictionary);
     return self;
 }
+
 
 /*+ (NSValueTransformer *)tweetContentImageJSONTransformer
 {

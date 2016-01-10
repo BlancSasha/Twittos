@@ -91,7 +91,7 @@
                    parameters:getParameters
                       success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
                           
-                          //NSLog(@"JSON : %@",operation.responseString);
+                          NSLog(@"JSON : %@",operation.responseString);
                           
                           NSError *err = nil;
                           
