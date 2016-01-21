@@ -14,7 +14,7 @@
 
 typedef enum : NSUInteger {
     FBTweetImageUserForTableview,
-    //FBTweetImageContent,
+    FBTweetImageContent,
     FBTweetBackgroundImageUser,
     FBTweetImageUser,
 } FBTweetImageType;

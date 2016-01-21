@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBTweet.h"
+#import "Mantle.h"
 
-@interface FBTweetImage : FBTweet
+@interface FBTweetImage : MTLModel <MTLJSONSerializing>
 
 @property (strong, nonatomic) NSString *tweetImageContentURL;
+@property (nonatomic) NSInteger width;
+@property (nonatomic) NSInteger height;
 
 @end

@@ -14,7 +14,6 @@
     return @{
              @"userID":@"id",
              @"indices":@"indices",
-
              };
 }
 

@@ -26,6 +26,7 @@
 @property (strong, nonatomic) NSDate *tweetDate;
 
 @property (strong, nonatomic) NSArray *tweetLinks;
+@property (strong, nonatomic) NSArray *tweetMedias;
 
 @property (strong, nonatomic) FBTweet *retweetedStatus;
 @property (strong, nonatomic) FBUser *tweetUser;

@@ -10,6 +10,7 @@
 #import "FBTweet.h"
 #import "FBUser.h"
 #import "FBTweetManager.h"
+#import "FBTweetImage.h"
 
 @interface FBImageManager ()
 
@@ -56,9 +57,14 @@
 - (UIImage *) getImage:(FBTweetImageType)imageType inCacheForTweet:(FBTweet *)tweet
 {
     NSString *key;
+    FBTweetImage *tweetImage = tweet.tweetMedias[0];
+    
     switch (imageType) {
         case FBTweetImageUserForTableview:
             key = tweet.tweetUser.userImageURL;
+            break;
+        case FBTweetImageContent:
+            key = tweetImage.tweetImageContentURL;
             break;
         case FBTweetImageUser:
             if(tweet.retweetUser)
@@ -76,9 +82,7 @@
                 key = tweet.tweetUser.userBackgroundImageURL;
             }
             break;
-       /* case FBTweetImageContent:
-            key = tweet.imageURL;
-            break;*/
+
         default:
             break;
     }

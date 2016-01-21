@@ -91,7 +91,7 @@
                    parameters:getParameters
                       success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
                           
-                          NSLog(@"JSON : %@",operation.responseString);
+                          //NSLog(@"JSON : %@",operation.responseString);
                           
                           NSError *err = nil;
                           
@@ -117,13 +117,11 @@
     
     NSDictionary *postParameters = @{@"grant_type":@"client_credentials"};
     
-   // [[self.manager.requestSerializer HTTPRequestHeaders] setValuesForKeysWithDictionary:postHeaders];
-    
     [self.manager.requestSerializer setValue:postHeader forHTTPHeaderField:@"Authorization"];
     
     [self.manager POST:@"https://api.twitter.com/oauth2/token" parameters:postParameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         
-        NSLog(@"JSON : %@",responseObject);
+        //NSLog(@"JSON : %@",responseObject);
         
         
         if ([[responseObject valueForKey:@"token_type"] isEqual:@"bearer"]){

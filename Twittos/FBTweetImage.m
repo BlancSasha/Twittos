@@ -10,11 +10,13 @@
 
 @implementation FBTweetImage
 
-@dynamic tweetImageContentURL;
+//@dynamic tweetImageContentURL;
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"tweetImageContentURL":@"entities.media.media_url_https"
+             @"tweetImageContentURL":@"media_url_https",
+             @"width":@"sizes.medium.w",
+             @"height":@"sizes.medium.h",
              };
 }
 

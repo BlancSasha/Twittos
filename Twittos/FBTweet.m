@@ -27,6 +27,7 @@
              @"tweetUser":@"user",
              @"retweetUser":@"retweeted_status.user",
              @"tweetDate":@"created_at",
+             @"tweetMedias":@"entities.media",
              };
 }
 
@@ -36,7 +37,7 @@
             self.class, self, self.text, self.user, self.retweetCount, self.likes, self.name, self.screenName, self.tweetLinks];
 }
 
-+(Class)classForParsingJSONDictionary:(NSDictionary *)JSONDictionary
+/*+(Class)classForParsingJSONDictionary:(NSDictionary *)JSONDictionary
 {
     if (JSONDictionary[@"entities.media.media_url_https"] != nil)
     {
@@ -46,11 +47,15 @@
     return self;
 }
 
-
-/*+ (NSValueTransformer *)tweetContentImageJSONTransformer
++ (NSValueTransformer *)tweetContentImageJSONTransformer
 {
     return [MTLJSONAdapter dictionaryTransformerWithModelClass:[FBTweetImage class]];
 }*/
+
++(NSValueTransformer *)tweetMediasJSONTransformer
+{
+    return [MTLJSONAdapter arrayTransformerWithModelClass:[FBTweetImage class]];
+}
     
 + (NSValueTransformer *)tweetLinksJSONTransformer
 {
