@@ -50,7 +50,8 @@
        
         self.tweetMediaView = [[UIImageView alloc] init];
         [self.tweetMediaView setBackgroundColor:[UIColor grayColor]];
-        self.tweetMediaView.contentMode = UIViewContentModeScaleAspectFit;
+        self.tweetMediaView.contentMode = UIViewContentModeScaleAspectFill;
+        self.tweetMediaView.layer.masksToBounds = YES;
         [self.contentView addSubview:self.tweetMediaView];
     }
     return self;
@@ -77,11 +78,17 @@
     self.userImageView.layer.borderWidth = 1;
     [self.userImageView setClipsToBounds:YES];
     
+    for (MASConstraint *constraint in [MASViewConstraint installedConstraintsForView:self.tweetMediaView])
+        [constraint uninstall];
+    
+    for (MASConstraint *constraint in [MASViewConstraint installedConstraintsForView:self.tweetLabel])
+        [constraint uninstall];
+    
     [self.tweetLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@10);
         if(!self.tweetImage)
         {
-            make.bottom.equalTo(@(-10));
+            make.bottom.equalTo(@(-10)).priorityLow();
         }
         make.left.equalTo(self.userImageView.mas_right).offset(10);
         make.right.equalTo(@(-10));
@@ -93,11 +100,10 @@
             make.top.equalTo(self.tweetLabel.mas_bottom).offset(10);
             make.left.equalTo(@10);
             make.right.equalTo(@(-10));
-            make.height.equalTo(@200);
-            make.bottom.equalTo(@(-10));
+            make.height.equalTo(self.tweetMediaView.mas_width).multipliedBy(1./2.);
+            make.bottom.equalTo(@(-10)).priorityLow();
         }];
-        [self.tweetMediaView setBackgroundColor:[UIColor whiteColor]];
-
+        [self.tweetMediaView setBackgroundColor:[UIColor redColor]];
     }
 }
 
@@ -122,8 +128,8 @@
     NSMutableAttributedString *attrText = [NSMutableAttributedString alloc];
     
     if(tweet.retweetedStatus){
-    attrText = [attrText initWithString:tweet.retweetedStatus.text
-                  attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+        attrText = [attrText initWithString:tweet.retweetedStatus.text
+                                 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
         for (FBTweetLink *tweetLink in tweet.retweetedStatus.tweetLinks)
         {
             NSInteger start = [tweetLink.indices[0] integerValue];
@@ -133,10 +139,13 @@
             [attrText addAttribute:NSForegroundColorAttributeName
                              value:[UIColor blueColor]
                              range:NSMakeRange(start,length)];
+           /* [attrText addAttribute:NSLinkAttributeName
+                             value:[@(tweetLink.userID) stringValue]
+                             range:NSMakeRange(start,length)];*/
         }
     }else{
-    attrText = [attrText initWithString:tweet.text
-                             attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+        attrText = [attrText initWithString:tweet.text
+                                 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
         for (FBTweetLink *tweetLink in tweet.tweetLinks)
         {
             NSInteger start = [tweetLink.indices[0] integerValue];
@@ -146,6 +155,16 @@
             [attrText addAttribute:NSForegroundColorAttributeName
                              value:[UIColor blueColor]
                              range:NSMakeRange(start,length)];
+         /*   [attrText addAttribute:NSLinkAttributeName
+                             value:[@(tweetLink.userID) stringValue]
+                             range:NSMakeRange(start,length)];*/
+            
+           /* UITextView *tv = [UITextView new];
+            [tv setTextContainerInset:UIEdgeInsetsZero];
+            [tv mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(self.tweetLabel);
+            }];
+            [tv setDelegate:self];*/
         }
     }
     
@@ -184,6 +203,16 @@
     [self setNeedsUpdateConstraints];
 }
 
+- (void)layoutIfNeeded
+{
+    [super layoutIfNeeded];
+    self.tweetLabel.preferredMaxLayoutWidth = self.tweetLabel.frame.size.width;
+}
+
+-(void)linkTapped:(UITapGestureRecognizer *)recognizer
+{
+    //self.imageView setUserInteractionEnabled:NO
+}
 
 -(void)didFinishDownloadingImage:(UIImage *)image forURL:(NSString *)URL
 {
@@ -200,4 +229,24 @@
     
 }
 
+/*static FBTweetCell *sizingCell;
+
++ (CGFloat)cellHeightForTweet:(FBTweet *)tweet andWidth:(CGFloat)width
+{
+    if (!sizingCell)
+    {
+        sizingCell = [[self alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sizingCellFBTweet"];
+    }
+    
+    [sizingCell setTweet:tweet];
+    [sizingCell setFrame:CGRectMake(0, 0, width, 1000.)];
+    [sizingCell setNeedsUpdateConstraints];
+    [sizingCell updateConstraintsIfNeeded];
+    [sizingCell setNeedsLayout];
+    [sizingCell layoutIfNeeded];
+    [sizingCell.contentView layoutIfNeeded];
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    return size.height + 1;
+}
+*/
 @end

@@ -16,5 +16,7 @@
 
 -(void) setTweet:(FBTweet *)tweet;
 
+//+ (CGFloat)cellHeightForTweet:(FBTweet *)tweet andWidth:(CGFloat)width;
+
 @end
 
