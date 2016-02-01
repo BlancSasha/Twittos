@@ -128,9 +128,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Récupération du tweet associé à la cellule
-    //FBTweet *tweet = self.tweets[indexPath.row];
-    //return [FBTweetCell cellHeightForTweet:tweet andWidth:tableView.bounds.size.width];
-    return UITableViewAutomaticDimension;
+    FBTweet *tweet = self.tweets[indexPath.row];
+    return [FBTweetCell cellHeightForTweet:tweet andWidth:tableView.bounds.size.width];
+    //return UITableViewAutomaticDimension;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
