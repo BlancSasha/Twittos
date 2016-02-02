@@ -25,7 +25,10 @@
 @property (strong, nonatomic) UIImageView *userImageView;
 @property (strong, nonatomic) UIImageView *tweetMediaView;
 
+@property (strong, nonatomic) UITapGestureRecognizer *tapOnTweetMediaView;
+
 @property(strong, nonatomic) FBTweetImage *tweetImage;
+@property(strong,nonatomic) UIImage *tweetUIImage;
 
 @end
 
@@ -53,6 +56,12 @@
         self.tweetMediaView.contentMode = UIViewContentModeScaleAspectFill;
         self.tweetMediaView.layer.masksToBounds = YES;
         [self.contentView addSubview:self.tweetMediaView];
+        
+        self.tapOnTweetMediaView = [[UITapGestureRecognizer alloc]
+                                    initWithTarget:self
+                                    action:@selector(imageTapped:)];
+        [self.tweetMediaView addGestureRecognizer:self.tapOnTweetMediaView];
+        [self.tweetMediaView setUserInteractionEnabled:YES];
     }
     return self;
 }
@@ -180,6 +189,7 @@
         UIImage *contentImage = [[FBImageManager sharedInstance] getImage:FBTweetImageContent inCacheForTweet:tweet];
         if(contentImage!=nil)
         {
+            self.tweetUIImage = contentImage;
             [self.tweetMediaView setImage:contentImage];
             [self.tweetMediaView setBackgroundColor:[UIColor whiteColor]];
         }
@@ -199,7 +209,6 @@
     }
     
     
-#warning a verifier avec Stan
     [self setNeedsUpdateConstraints];
 }
 
@@ -209,6 +218,11 @@
     self.tweetLabel.preferredMaxLayoutWidth = self.tweetLabel.frame.size.width;
 }
 
+-(void)imageTapped:(UITapGestureRecognizer *)recognizer
+{
+    self.imageTappedBlock(self.tweetUIImage);
+}
+
 -(void)linkTapped:(UITapGestureRecognizer *)recognizer
 {
     //self.imageView setUserInteractionEnabled:NO
@@ -216,14 +230,13 @@
 
 -(void)didFinishDownloadingImage:(UIImage *)image forURL:(NSString *)URL
 {
-    NSString *imageContentURL = self.tweetImage.tweetImageContentURL;
-    
     if([self.tweet.tweetUser.userImageURL isEqualToString:URL])
     {
         [self.userImageView setImage:image];
-    }else if([imageContentURL isEqualToString:URL])
+    }else if([self.tweetImage.tweetImageContentURL isEqualToString:URL])
     {
         [self.tweetMediaView setImage:image];
+        self.tweetUIImage = image;
     }
     
     

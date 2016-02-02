@@ -8,6 +8,7 @@
 
 #import "FBListViewController.h"
 #import "FBDetailsViewController.h"
+#import "FBImageViewer.h"
 
 #import <JGProgressHUD/JGProgressHUD.h>
 
@@ -105,6 +106,13 @@
     
     // On met à jour les éléments affichés par la cellule à l'aide de l'objet Tweet que l'on veut représenter
     [cell setTweet:tweet];
+    
+    cell.imageTappedBlock = ^(UIImage *image){
+        FBImageViewer *imageViewer = [[FBImageViewer alloc] init];
+        [imageViewer setImage:image];
+        [self.navigationController pushViewController:imageViewer animated:YES];
+    };
+    
     
     // On retourne la cellule au tableView pour qu'il puisse l'afficher
     return cell;

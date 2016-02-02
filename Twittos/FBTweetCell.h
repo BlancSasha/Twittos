@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) FBTweet *tweet;
 
+@property (copy) void (^imageTappedBlock)(UIImage *);
+
 -(void) setTweet:(FBTweet *)tweet;
 
 //+ (CGFloat)cellHeightForTweet:(FBTweet *)tweet andWidth:(CGFloat)width;

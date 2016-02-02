@@ -21,6 +21,7 @@
 		C9766C2F1BDE9EF00055ECEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9766C2D1BDE9EF00055ECEA /* LaunchScreen.storyboard */; };
 		C978BAB01BDEA2A200DA98A7 /* FBListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C978BAAF1BDEA2A200DA98A7 /* FBListViewController.m */; };
 		C978BAB31BDEA2B900DA98A7 /* FBDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C978BAB21BDEA2B900DA98A7 /* FBDetailsViewController.m */; };
+		C97B038C1C5EB513005D6EC6 /* FBImageViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B038B1C5EB513005D6EC6 /* FBImageViewer.m */; };
 		C9A3ED591C34587300B53948 /* FBImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A3ED581C34587300B53948 /* FBImageManager.m */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,8 @@
 		C978BAAF1BDEA2A200DA98A7 /* FBListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBListViewController.m; sourceTree = "<group>"; };
 		C978BAB11BDEA2B900DA98A7 /* FBDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDetailsViewController.h; sourceTree = "<group>"; };
 		C978BAB21BDEA2B900DA98A7 /* FBDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBDetailsViewController.m; sourceTree = "<group>"; };
+		C97B038A1C5EB513005D6EC6 /* FBImageViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBImageViewer.h; sourceTree = "<group>"; };
+		C97B038B1C5EB513005D6EC6 /* FBImageViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBImageViewer.m; sourceTree = "<group>"; };
 		C9A3ED571C34587300B53948 /* FBImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBImageManager.h; sourceTree = "<group>"; };
 		C9A3ED581C34587300B53948 /* FBImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBImageManager.m; sourceTree = "<group>"; };
 		F36AC4D711F61B5FF5909C76 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				C94C0E681C285D89009B5DD9 /* FBUser.m */,
 				C9A3ED571C34587300B53948 /* FBImageManager.h */,
 				C9A3ED581C34587300B53948 /* FBImageManager.m */,
+				C97B038A1C5EB513005D6EC6 /* FBImageViewer.h */,
+				C97B038B1C5EB513005D6EC6 /* FBImageViewer.m */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -284,6 +289,7 @@
 				C978BAB01BDEA2A200DA98A7 /* FBListViewController.m in Sources */,
 				C94C0E661C26FCF1009B5DD9 /* FBTweetLink.m in Sources */,
 				C9A3ED591C34587300B53948 /* FBImageManager.m in Sources */,
+				C97B038C1C5EB513005D6EC6 /* FBImageViewer.m in Sources */,
 				C91AEF1D1C16C5A5002BFBBC /* FBLocationManager.m in Sources */,
 				C91AEF1A1C16C594002BFBBC /* FBTweetManager.m in Sources */,
 			);
