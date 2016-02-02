@@ -242,7 +242,7 @@
     
 }
 
-/*static FBTweetCell *sizingCell;
+static FBTweetCell *sizingCell;
 
 + (CGFloat)cellHeightForTweet:(FBTweet *)tweet andWidth:(CGFloat)width
 {
@@ -258,8 +258,11 @@
     [sizingCell setNeedsLayout];
     [sizingCell layoutIfNeeded];
     [sizingCell.contentView layoutIfNeeded];
-    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:CGSizeMake(width, 1000.)
+                                        withHorizontalFittingPriority:UILayoutPriorityRequired
+                                              verticalFittingPriority:UILayoutPriorityFittingSizeLevel];
+    NSLog(@"%@", NSStringFromCGSize(size));
     return size.height + 1;
 }
-*/
+
 @end
