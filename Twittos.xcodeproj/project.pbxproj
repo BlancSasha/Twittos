@@ -10,7 +10,6 @@
 		AC6BC66CE70B00F92728C250 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 40DFDB93B3C0DF0E5AF852FE /* libPods.a */; };
 		C90B9D871C3C2EEC001EBD0D /* FBTweetImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C90B9D861C3C2EEC001EBD0D /* FBTweetImage.m */; };
 		C91AEF1A1C16C594002BFBBC /* FBTweetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C91AEF191C16C594002BFBBC /* FBTweetManager.m */; };
-		C91AEF1D1C16C5A5002BFBBC /* FBLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C91AEF1C1C16C5A5002BFBBC /* FBLocationManager.m */; };
 		C91AEF201C16C734002BFBBC /* FBTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = C91AEF1F1C16C734002BFBBC /* FBTweet.m */; };
 		C94C0E631C26E8C1009B5DD9 /* FBTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C94C0E621C26E8C1009B5DD9 /* FBTweetCell.m */; };
 		C94C0E661C26FCF1009B5DD9 /* FBTweetLink.m in Sources */ = {isa = PBXBuildFile; fileRef = C94C0E651C26FCF1009B5DD9 /* FBTweetLink.m */; };
@@ -32,8 +31,6 @@
 		C90B9D861C3C2EEC001EBD0D /* FBTweetImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweetImage.m; sourceTree = "<group>"; };
 		C91AEF181C16C594002BFBBC /* FBTweetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweetManager.h; sourceTree = "<group>"; };
 		C91AEF191C16C594002BFBBC /* FBTweetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweetManager.m; sourceTree = "<group>"; };
-		C91AEF1B1C16C5A5002BFBBC /* FBLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBLocationManager.h; sourceTree = "<group>"; };
-		C91AEF1C1C16C5A5002BFBBC /* FBLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLocationManager.m; sourceTree = "<group>"; };
 		C91AEF1E1C16C734002BFBBC /* FBTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweet.h; sourceTree = "<group>"; };
 		C91AEF1F1C16C734002BFBBC /* FBTweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweet.m; sourceTree = "<group>"; };
 		C94C0E611C26E8C1009B5DD9 /* FBTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweetCell.h; sourceTree = "<group>"; };
@@ -138,8 +135,6 @@
 				C978BAB21BDEA2B900DA98A7 /* FBDetailsViewController.m */,
 				C91AEF181C16C594002BFBBC /* FBTweetManager.h */,
 				C91AEF191C16C594002BFBBC /* FBTweetManager.m */,
-				C91AEF1B1C16C5A5002BFBBC /* FBLocationManager.h */,
-				C91AEF1C1C16C5A5002BFBBC /* FBLocationManager.m */,
 				C91AEF1E1C16C734002BFBBC /* FBTweet.h */,
 				C91AEF1F1C16C734002BFBBC /* FBTweet.m */,
 				C90B9D851C3C2EEC001EBD0D /* FBTweetImage.h */,
@@ -290,7 +285,6 @@
 				C94C0E661C26FCF1009B5DD9 /* FBTweetLink.m in Sources */,
 				C9A3ED591C34587300B53948 /* FBImageManager.m in Sources */,
 				C97B038C1C5EB513005D6EC6 /* FBImageViewer.m in Sources */,
-				C91AEF1D1C16C5A5002BFBBC /* FBLocationManager.m in Sources */,
 				C91AEF1A1C16C594002BFBBC /* FBTweetManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

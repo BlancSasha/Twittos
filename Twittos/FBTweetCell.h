@@ -10,7 +10,7 @@
 
 @class FBTweet;
 
-@interface FBTweetCell : UITableViewCell
+@interface FBTweetCell : UITableViewCell <UITextViewDelegate>
 
 @property (strong, nonatomic) FBTweet *tweet;
 

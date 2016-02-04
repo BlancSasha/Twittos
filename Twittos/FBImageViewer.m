@@ -7,6 +7,7 @@
 //
 
 #import "FBImageViewer.h"
+#import "Masonry.h"
 
 @interface FBImageViewer ()
 
@@ -24,16 +25,24 @@
     [self.view setBackgroundColor:[UIColor blackColor]];
     
     self.imageView = [[UIImageView alloc] init];
-    [self.imageView setBackgroundColor:[UIColor grayColor]];
+    [self.imageView setBackgroundColor:[UIColor blackColor]];
+    [self.imageView setImage:self.image];
     [self.view addSubview:self.imageView];
     
-    [self.imageView setFrame:self.view.frame];
-    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
+    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_topLayoutGuideBottom);
+        make.left.equalTo(@0);
+        make.right.equalTo(@0);
+        make.bottom.equalTo(self.mas_bottomLayoutGuide);
+    }];
+     
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;    
 }
 
 -(void) setImage:(UIImage *)imageToDisplay
 {
+    self->_image = [[UIImage alloc] init];
+    self->_image = imageToDisplay;
     [self.imageView setImage:imageToDisplay];
 }
 

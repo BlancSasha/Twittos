@@ -24,6 +24,7 @@
 @property (strong, nonatomic) UILabel *tweetLabel;
 @property (strong, nonatomic) UIImageView *userImageView;
 @property (strong, nonatomic) UIImageView *tweetMediaView;
+@property (strong, nonatomic) UITextView *tweetTextView;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapOnTweetMediaView;
 
@@ -62,6 +63,12 @@
                                     action:@selector(imageTapped:)];
         [self.tweetMediaView addGestureRecognizer:self.tapOnTweetMediaView];
         [self.tweetMediaView setUserInteractionEnabled:YES];
+    
+        
+        self.tweetTextView = [[UITextView alloc] init];
+        [self.tweetTextView setTextContainerInset:UIEdgeInsetsZero];
+        [self.tweetTextView setDelegate:self];
+
     }
     return self;
 }
@@ -101,6 +108,14 @@
         }
         make.left.equalTo(self.userImageView.mas_right).offset(10);
         make.right.equalTo(@(-10));
+    }];
+    [self.tweetLabel setHidden:YES];
+    
+    [self.tweetTextView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.tweetLabel.mas_top);
+        make.left.equalTo(self.tweetLabel.mas_left);
+        make.right.equalTo(self.tweetLabel.mas_right);
+        make.bottom.equalTo(self.tweetLabel.mas_bottom);
     }];
     
     if(self.tweetImage)
@@ -145,12 +160,13 @@
             NSInteger end = [tweetLink.indices[1] integerValue];
             NSInteger length = end - start;
             
-            [attrText addAttribute:NSForegroundColorAttributeName
+            /*[attrText addAttribute:NSForegroundColorAttributeName
                              value:[UIColor blueColor]
-                             range:NSMakeRange(start,length)];
-           /* [attrText addAttribute:NSLinkAttributeName
-                             value:[@(tweetLink.userID) stringValue]
                              range:NSMakeRange(start,length)];*/
+            
+            [attrText addAttribute:NSLinkAttributeName
+                             value:[@(tweetLink.userID) stringValue]
+                             range:NSMakeRange(start,length)];
         }
     }else{
         attrText = [attrText initWithString:tweet.text
@@ -161,19 +177,14 @@
             NSInteger end = [tweetLink.indices[1] integerValue];
             NSInteger length = end - start;
             
-            [attrText addAttribute:NSForegroundColorAttributeName
+           /* [attrText addAttribute:NSForegroundColorAttributeName
                              value:[UIColor blueColor]
-                             range:NSMakeRange(start,length)];
-         /*   [attrText addAttribute:NSLinkAttributeName
-                             value:[@(tweetLink.userID) stringValue]
                              range:NSMakeRange(start,length)];*/
             
-           /* UITextView *tv = [UITextView new];
-            [tv setTextContainerInset:UIEdgeInsetsZero];
-            [tv mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(self.tweetLabel);
-            }];
-            [tv setDelegate:self];*/
+            [attrText addAttribute:NSLinkAttributeName
+                             value:[@(tweetLink.userID) stringValue]
+                             range:NSMakeRange(start,length)];
+            
         }
     }
     
@@ -202,6 +213,7 @@
     [attrTweet appendAttributedString:attrText];
  
     [self.tweetLabel setAttributedText:attrTweet];
+    [self.tweetTextView setAttributedText:attrTweet];
     
    if(self.tweetImage)
     {
