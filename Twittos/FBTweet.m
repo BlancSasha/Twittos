@@ -9,16 +9,15 @@
 #import "FBTweet.h"
 #import "FBTweetLink.h"
 #import "FBTweetImage.h"
+#import "FMResultSet.h"
 #import <Mantle/NSValueTransformer+MTLPredefinedTransformerAdditions.h>
 
 @implementation FBTweet
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"user":@"user.description",
+             @"tweetID":@"id_str",
              @"text":@"text",
-             @"name":@"user.name",
-             @"screenName":@"user.screen_name",
              @"coordinates":@"place.bounding_box.coordinates",
              @"retweetCount":@"retweet_count",
              @"likes":@"favorite_count",
@@ -31,10 +30,34 @@
              };
 }
 
+- (instancetype)initWithResultSet:(FMResultSet *)set
+{
+    self = [super init];
+    if (self)
+    {
+        self.tweetID = [set stringForColumn:@"tweetID"];
+        self.text = [set stringForColumn:@"tweetText"];
+        self.retweetCount = [[set stringForColumn:@"retweetCount"] integerValue];
+        self.likes = [[set stringForColumn:@"likes"] integerValue];
+        self.coordinates[0][0] = [set stringForColumn:@"coordinateLongitude1"];
+        self.coordinates[0][1] = [set stringForColumn:@"coordinateLatitude1"];
+        self.coordinates[1][0] = [set stringForColumn:@"coordinateLongitude2"];
+        self.coordinates[1][1] = [set stringForColumn:@"coordinateLatitude2"];
+        self.coordinates[2][0] = [set stringForColumn:@"coordinateLongitude3"];
+        self.coordinates[2][1] = [set stringForColumn:@"coordinateLatitude3"];
+        self.coordinates[3][0] = [set stringForColumn:@"coordinateLongitude4"];
+        self.coordinates[3][1] = [set stringForColumn:@"coordinateLatitude4"];
+        self.tweetDate = [[NSDate alloc] initWithTimeIntervalSince1970:[[set stringForColumn:@"date"] doubleValue]];
+        self.tweetMedias[0].tweetImageContentURL = [set stringForColumn:@"tweetContentImageURL"];
+    }
+    return self;
+}
+
+
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@: %p, text: %@, user: %@, retweetCount: %i, likes : %i, name: %@,  screenName: %@, tweetLinks : %@>",
-            self.class, self, self.text, self.user, self.retweetCount, self.likes, self.name, self.screenName, self.tweetLinks];
+    return [NSString stringWithFormat:@"<%@: %p, text: %@, retweetCount: %i, likes : %i, tweetLinks : %@>",
+            self.class, self, self.text, self.retweetCount, self.likes, self.tweetLinks];
 }
 
 /*+(Class)classForParsingJSONDictionary:(NSDictionary *)JSONDictionary

@@ -54,7 +54,7 @@
     
 }
 
-- (UIImage *) getImage:(FBTweetImageType)imageType inCacheForTweet:(FBTweet *)tweet
+- (UIImage *) getImage:(FBTweetImageType)imageType inCacheForTweet:(FBTweet *)tweet orUser:(FBUser *)user
 {
     NSString *key;
     FBTweetImage *tweetImage = tweet.tweetMedias[0];
@@ -70,22 +70,29 @@
             if(tweet.retweetUser)
             {
                 key = tweet.retweetUser.userImageURL;
-            }else{
+            } else if (tweet.tweetUser) {
                 key = tweet.tweetUser.userImageURL;
+            } else if (user) {
+                key = user.userImageURL;
             }
             break;
         case FBTweetBackgroundImageUser:
             if(tweet.retweetUser)
             {
                 key = tweet.retweetUser.userBackgroundImageURL;
-            }else{
+            } else if (tweet.tweetUser) {
                 key = tweet.tweetUser.userBackgroundImageURL;
+            } else if (user) {
+                key = user.userBackgroundImageURL;
             }
             break;
 
         default:
             break;
     }
+    
+    if (!key)
+        return nil;
     
     UIImage *imageToReturn = [self.imageCache objectForKey:key];
     

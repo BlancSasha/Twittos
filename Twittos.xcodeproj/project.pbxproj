@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AC6BC66CE70B00F92728C250 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 40DFDB93B3C0DF0E5AF852FE /* libPods.a */; };
+		C907906A1C6C7A8200D3BF3D /* FBSQLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C90790691C6C7A8200D3BF3D /* FBSQLManager.m */; };
 		C90B9D871C3C2EEC001EBD0D /* FBTweetImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C90B9D861C3C2EEC001EBD0D /* FBTweetImage.m */; };
 		C91AEF1A1C16C594002BFBBC /* FBTweetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C91AEF191C16C594002BFBBC /* FBTweetManager.m */; };
 		C91AEF201C16C734002BFBBC /* FBTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = C91AEF1F1C16C734002BFBBC /* FBTweet.m */; };
@@ -22,11 +23,15 @@
 		C978BAB31BDEA2B900DA98A7 /* FBDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C978BAB21BDEA2B900DA98A7 /* FBDetailsViewController.m */; };
 		C97B038C1C5EB513005D6EC6 /* FBImageViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B038B1C5EB513005D6EC6 /* FBImageViewer.m */; };
 		C9A3ED591C34587300B53948 /* FBImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A3ED581C34587300B53948 /* FBImageManager.m */; };
+		C9B47C801C882ACD00745C19 /* FBWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B47C7F1C882ACD00745C19 /* FBWebViewController.m */; };
+		C9DFA73A1C6A5C4B006CD7BF /* FBScrollViewCentered.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DFA7391C6A5C4B006CD7BF /* FBScrollViewCentered.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3046F5BF9E0D0352AB2748DB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		40DFDB93B3C0DF0E5AF852FE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C90790681C6C7A8200D3BF3D /* FBSQLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSQLManager.h; sourceTree = "<group>"; };
+		C90790691C6C7A8200D3BF3D /* FBSQLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSQLManager.m; sourceTree = "<group>"; };
 		C90B9D851C3C2EEC001EBD0D /* FBTweetImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweetImage.h; sourceTree = "<group>"; };
 		C90B9D861C3C2EEC001EBD0D /* FBTweetImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweetImage.m; sourceTree = "<group>"; };
 		C91AEF181C16C594002BFBBC /* FBTweetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweetManager.h; sourceTree = "<group>"; };
@@ -54,6 +59,10 @@
 		C97B038B1C5EB513005D6EC6 /* FBImageViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBImageViewer.m; sourceTree = "<group>"; };
 		C9A3ED571C34587300B53948 /* FBImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBImageManager.h; sourceTree = "<group>"; };
 		C9A3ED581C34587300B53948 /* FBImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBImageManager.m; sourceTree = "<group>"; };
+		C9B47C7E1C882ACD00745C19 /* FBWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBWebViewController.h; sourceTree = "<group>"; };
+		C9B47C7F1C882ACD00745C19 /* FBWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBWebViewController.m; sourceTree = "<group>"; };
+		C9DFA7381C6A5C4B006CD7BF /* FBScrollViewCentered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBScrollViewCentered.h; sourceTree = "<group>"; };
+		C9DFA7391C6A5C4B006CD7BF /* FBScrollViewCentered.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBScrollViewCentered.m; sourceTree = "<group>"; };
 		F36AC4D711F61B5FF5909C76 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,6 +138,10 @@
 		C978BAB41BDEA2C300DA98A7 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				C9B47C7E1C882ACD00745C19 /* FBWebViewController.h */,
+				C9B47C7F1C882ACD00745C19 /* FBWebViewController.m */,
+				C90790681C6C7A8200D3BF3D /* FBSQLManager.h */,
+				C90790691C6C7A8200D3BF3D /* FBSQLManager.m */,
 				C978BAAE1BDEA2A200DA98A7 /* FBListViewController.h */,
 				C978BAAF1BDEA2A200DA98A7 /* FBListViewController.m */,
 				C978BAB11BDEA2B900DA98A7 /* FBDetailsViewController.h */,
@@ -149,6 +162,8 @@
 				C9A3ED581C34587300B53948 /* FBImageManager.m */,
 				C97B038A1C5EB513005D6EC6 /* FBImageViewer.h */,
 				C97B038B1C5EB513005D6EC6 /* FBImageViewer.m */,
+				C9DFA7381C6A5C4B006CD7BF /* FBScrollViewCentered.h */,
+				C9DFA7391C6A5C4B006CD7BF /* FBScrollViewCentered.m */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -274,12 +289,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9B47C801C882ACD00745C19 /* FBWebViewController.m in Sources */,
 				C9766C241BDE9EF00055ECEA /* AppDelegate.m in Sources */,
 				C94C0E631C26E8C1009B5DD9 /* FBTweetCell.m in Sources */,
+				C907906A1C6C7A8200D3BF3D /* FBSQLManager.m in Sources */,
 				C978BAB31BDEA2B900DA98A7 /* FBDetailsViewController.m in Sources */,
 				C9766C211BDE9EF00055ECEA /* main.m in Sources */,
 				C94C0E691C285D89009B5DD9 /* FBUser.m in Sources */,
 				C90B9D871C3C2EEC001EBD0D /* FBTweetImage.m in Sources */,
+				C9DFA73A1C6A5C4B006CD7BF /* FBScrollViewCentered.m in Sources */,
 				C91AEF201C16C734002BFBBC /* FBTweet.m in Sources */,
 				C978BAB01BDEA2A200DA98A7 /* FBListViewController.m in Sources */,
 				C94C0E661C26FCF1009B5DD9 /* FBTweetLink.m in Sources */,

@@ -13,23 +13,25 @@
 @class FBTweetImage;
 @class FBTweetLink;
 @class FBUser;
+@class FMResultSet;
 
 @interface FBTweet : MTLModel <MTLJSONSerializing>
 
+@property (strong, nonatomic) NSString *tweetID;
 @property (strong, nonatomic) NSString *text;
-@property (strong, nonatomic) NSString *user;
 @property (nonatomic) NSInteger retweetCount;
 @property (nonatomic) NSInteger likes;
-@property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *screenName;
 @property (strong, nonatomic) NSArray *coordinates;
 @property (strong, nonatomic) NSDate *tweetDate;
 
-@property (strong, nonatomic) NSArray *tweetLinks;
-@property (strong, nonatomic) NSArray *tweetMedias;
+@property (strong, nonatomic) NSArray <FBTweetLink *> *tweetLinks;
+@property (strong, nonatomic) NSArray <FBTweetImage *> *tweetMedias;
 
 @property (strong, nonatomic) FBTweet *retweetedStatus;
 @property (strong, nonatomic) FBUser *tweetUser;
 @property (strong, nonatomic) FBUser *retweetUser;
+
+- (instancetype)initWithResultSet:(FMResultSet *)set;
+
 
 @end

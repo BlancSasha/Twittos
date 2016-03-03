@@ -10,9 +10,16 @@
 
 #import "Mantle.h"
 
+@class FMResultSet;
+
 @interface FBTweetLink : MTLModel <MTLJSONSerializing>
 
 @property (nonatomic) NSInteger userID;
-@property (strong,nonatomic) NSArray *indices;
+@property (strong, nonatomic) NSMutableArray *indices;
+
+-(NSString *)getUserID;
+
+- (instancetype)initWithResultSet:(FMResultSet *)set;
+
 
 @end

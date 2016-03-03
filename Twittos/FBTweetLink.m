@@ -7,6 +7,7 @@
 //
 
 #import "FBTweetLink.h"
+#import "FMResultSet.h"
 
 @implementation FBTweetLink
 
@@ -15,6 +16,24 @@
              @"userID":@"id",
              @"indices":@"indices",
              };
+}
+
+-(NSString *)getUserID
+{
+    return [@(self.userID) stringValue];
+}
+
+
+- (instancetype)initWithResultSet:(FMResultSet *)set
+{
+    self = [super init];
+    if (self)
+    {
+        self.userID = [[set stringForColumn:@"userID"] integerValue];
+        self.indices[0] = [set stringForColumn:@"startIndice"];
+        self.indices[1] = [set stringForColumn:@"endIndice"];
+    }
+    return self;
 }
 
 @end

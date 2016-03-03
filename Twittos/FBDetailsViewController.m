@@ -118,7 +118,6 @@
     [self updateMapAnnotationsFromArrayOfCoordinates:self.tweet.coordinates];
     [self.view addSubview:self.mapView];
     
-#warning
     [self updateViewConstraints];
     [self fillviews];
 }
@@ -135,18 +134,20 @@
     ////////////////////
     
     UIImage *userImage = [[FBImageManager sharedInstance] getImage:FBTweetImageUser
-                                                   inCacheForTweet:self.tweet];
+                                                   inCacheForTweet:self.tweet
+                                                            orUser:self.userDetails];
     if(userImage)
-     {
-         [self.userImageView setImage:userImage];
-     }
+    {
+        [self.userImageView setImage:userImage];
+    }
  
     ////////////////////
     // background image view
     ////////////////////
     
     UIImage *backgroundImage = [[FBImageManager sharedInstance] getImage:FBTweetBackgroundImageUser
-                                                         inCacheForTweet:self.tweet];
+                                                         inCacheForTweet:self.tweet
+                                                                  orUser:self.userDetails];
     
     if(backgroundImage)
     {

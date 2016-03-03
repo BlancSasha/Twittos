@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 #import "Mantle.h"
+@class FMResultSet;
+
 
 @interface FBUser : MTLModel <MTLJSONSerializing>
 
@@ -20,9 +22,12 @@
 @property (strong, nonatomic) NSString *userImageURL;
 @property (strong, nonatomic) NSString *userBackgroundImageURL;
 
-@property (nonatomic) NSInteger userID;
+@property (strong, nonatomic) NSString *userID;
 @property (nonatomic) NSInteger userFollowersCount;
 @property (nonatomic) NSInteger userFriendsCount;
 @property (nonatomic) NSInteger userLikesCount;
+
+- (instancetype)initWithResultSet:(FMResultSet *)set;
+
 
 @end

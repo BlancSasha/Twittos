@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @class FBTweet;
+@class FBUser;
 
 @interface FBTweetCell : UITableViewCell <UITextViewDelegate>
 
 @property (strong, nonatomic) FBTweet *tweet;
 
 @property (copy) void (^imageTappedBlock)(UIImage *);
+@property (copy) void (^linkTappedBlockFOrUser)(FBUser *);
 
 -(void) setTweet:(FBTweet *)tweet;
 

@@ -68,6 +68,10 @@
         self.tweetTextView = [[UITextView alloc] init];
         [self.tweetTextView setTextContainerInset:UIEdgeInsetsZero];
         [self.tweetTextView setDelegate:self];
+        self.tweetTextView.editable = NO;
+        self.tweetTextView.scrollEnabled = NO;
+        self.tweetTextView.dataDetectorTypes = (UIDataDetectorTypeLink | UIDataDetectorTypePhoneNumber);
+        [self.contentView addSubview:self.tweetTextView];
 
     }
     return self;
@@ -141,11 +145,11 @@
     
     
     NSAttributedString *attrName =
-    [[NSAttributedString alloc] initWithString:tweet.name
+    [[NSAttributedString alloc] initWithString:tweet.tweetUser.userName
                                     attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:14]}];
     
     NSAttributedString *attrScreenName =
-    [[NSAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@" @%@\n", tweet.screenName]
+    [[NSAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@" @%@\n", tweet.tweetUser.userSreenName]
                                     attributes:@{NSForegroundColorAttributeName:[UIColor grayColor],
                                                  NSFontAttributeName:[UIFont systemFontOfSize:14]}];
     
@@ -163,10 +167,12 @@
             /*[attrText addAttribute:NSForegroundColorAttributeName
                              value:[UIColor blueColor]
                              range:NSMakeRange(start,length)];*/
+            NSString *value = [[NSString alloc] initWithFormat:@"userID%@",[@(tweetLink.userID) stringValue]];
             
             [attrText addAttribute:NSLinkAttributeName
-                             value:[@(tweetLink.userID) stringValue]
+                             value:value
                              range:NSMakeRange(start,length)];
+            
         }
     }else{
         attrText = [attrText initWithString:tweet.text
@@ -180,15 +186,16 @@
            /* [attrText addAttribute:NSForegroundColorAttributeName
                              value:[UIColor blueColor]
                              range:NSMakeRange(start,length)];*/
-            
+            NSString *value = [[NSString alloc] initWithFormat:@"userID%@",[@(tweetLink.userID) stringValue]];
             [attrText addAttribute:NSLinkAttributeName
-                             value:[@(tweetLink.userID) stringValue]
+                             value:value
                              range:NSMakeRange(start,length)];
+            
             
         }
     }
     
-    UIImage *image = [[FBImageManager sharedInstance] getImage:FBTweetImageUserForTableview inCacheForTweet:tweet];
+    UIImage *image = [[FBImageManager sharedInstance] getImage:FBTweetImageUserForTableview inCacheForTweet:tweet orUser:nil];
     if(image!=nil)
     {
         [self.userImageView setImage:image];
@@ -197,7 +204,7 @@
     
     if(self.tweetImage)
     {
-        UIImage *contentImage = [[FBImageManager sharedInstance] getImage:FBTweetImageContent inCacheForTweet:tweet];
+        UIImage *contentImage = [[FBImageManager sharedInstance] getImage:FBTweetImageContent inCacheForTweet:tweet orUser:nil];
         if(contentImage!=nil)
         {
             self.tweetUIImage = contentImage;
@@ -235,10 +242,6 @@
     self.imageTappedBlock(self.tweetUIImage);
 }
 
--(void)linkTapped:(UITapGestureRecognizer *)recognizer
-{
-    //self.imageView setUserInteractionEnabled:NO
-}
 
 -(void)didFinishDownloadingImage:(UIImage *)image forURL:(NSString *)URL
 {
@@ -275,6 +278,32 @@ static FBTweetCell *sizingCell;
                                               verticalFittingPriority:UILayoutPriorityFittingSizeLevel];
     NSLog(@"%@", NSStringFromCGSize(size));
     return size.height + 1;
+}
+
+#pragma mark UITextView Delegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
+{
+   /* if ([URL.scheme isEqualToString:@"http"] ||[URL.scheme isEqualToString:@"https"])
+    {
+        // lien web
+        // --> ouvrir un nouveau view controller avec une webview dedans
+        return YES;
+    }*/
+    if([[URL.absoluteString substringToIndex:[@"userID" length]] isEqualToString: @"userID"])
+    {
+        NSString *userID = [URL.absoluteString substringFromIndex:[@"userID" length]];
+        NSLog(@"UserID : %@",userID);
+        
+        [[FBTweetManager sharedManager] getUserInfoFor:userID withBlock:^(FBUser *user, NSError *error) {
+            self.linkTappedBlockFOrUser(user);
+        }];
+        //self.linkTappedBlockFOrUser
+        
+    return NO;
+    }else{
+    return YES;
+    }
 }
 
 @end

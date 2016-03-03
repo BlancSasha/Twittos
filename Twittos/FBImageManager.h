@@ -10,6 +10,7 @@
 
 @class UIImage;
 @class FBTweet;
+@class FBUser;
 
 
 typedef enum : NSUInteger {
@@ -34,7 +35,7 @@ typedef enum : NSUInteger {
 
 - (void) addImageInCache:(UIImage *)image forURLkey:(NSString *)URL;
 
-- (UIImage *)getImage:(FBTweetImageType)imageType inCacheForTweet:(FBTweet *)tweet;
+- (UIImage *)getImage:(FBTweetImageType)imageType inCacheForTweet:(FBTweet *)tweet orUser:(FBUser *)user;
 
 - (void) addDelegate:(id <FBImageManagerDelegate>)delegate;
 

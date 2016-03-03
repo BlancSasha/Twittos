@@ -9,16 +9,17 @@
 #import <Foundation/Foundation.h>
 
 @class UIImage;
+@class FBUser;
 
 @interface FBTweetManager : NSObject
 
 - (void) fetchTweetswithBlock:(void(^)(NSArray *,NSError *))block;
 
-- (void) authenticationWithencoded64authorizationHeader:(NSString *)encoded64authorizationHeader
-                                               andBlock:(void(^)(NSString *,NSError *))authentBlock;
+- (void) authenticationWithBlock:(void(^)(NSError *))authentBlock;
 
 - (void) downloadImageWithURL:(NSString *)imageURL withBlock:(void(^)(UIImage *,NSString *,NSError *))imageBlock;
 
+-(void)getUserInfoFor:(NSString *)userID withBlock:(void(^)(FBUser *,NSError *))block;
 
 + (instancetype)sharedManager;
 

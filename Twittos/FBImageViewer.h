@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "FBScrollViewCentered.h"
 
-@interface FBImageViewer : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface FBImageViewer : UIViewController <UIImagePickerControllerDelegate, UIScrollViewDelegate,  UINavigationControllerDelegate>
 
 @property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) FBScrollViewCentered *scrollView;
 
 -(void) setImage:(UIImage *)imageToDisplay;
 

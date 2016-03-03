@@ -9,6 +9,7 @@
 #import "FBListViewController.h"
 #import "FBDetailsViewController.h"
 #import "FBImageViewer.h"
+#import "FBSQLManager.h"
 
 #import <JGProgressHUD/JGProgressHUD.h>
 
@@ -36,6 +37,7 @@
     self.tableView = [[UITableView alloc] init];
     // dimensionnement à la taille de l'écran
     [self.tableView setFrame:self.view.bounds];
+    [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth)];
     // Définition du type de cellule que l'on souhaite utiliser. Ici des cellules basiques, que l'on demandera avec l'identifiant "cell"
     [self.tableView registerClass:FBTweetCell.class forCellReuseIdentifier:@"cell"];
     // Lorsque le tableView a besoin de données, il fait appel à moi
@@ -68,12 +70,14 @@
         if (error)
         {
             NSLog(@"Error %@; %@", error, [error localizedDescription]);
-                    //[HUD dismiss];
+            
+            NSArray *SQLtweets = [[FBSQLManager sharedSQLManager] getAllTweets];
+            [self setTweets:SQLtweets];
         }
         else
         {
             [self setTweets:tweets];
-                    //[HUD dismiss];
+            [[FBSQLManager sharedSQLManager] addTweetsInDatabase:tweets];
         }
         
         [HUD dismiss];
@@ -107,12 +111,22 @@
     // On met à jour les éléments affichés par la cellule à l'aide de l'objet Tweet que l'on veut représenter
     [cell setTweet:tweet];
     
-    cell.imageTappedBlock = ^(UIImage *image){
+    cell.imageTappedBlock = ^(UIImage *image)
+    {
         FBImageViewer *imageViewer = [[FBImageViewer alloc] init];
         [imageViewer setImage:image];
         [self.navigationController pushViewController:imageViewer animated:YES];
     };
     
+    cell.linkTappedBlockFOrUser = ^(FBUser *user)
+    {
+        FBDetailsViewController *userDetailsViewController = [[FBDetailsViewController alloc] init];
+        [userDetailsViewController setUserDetails:user];
+        //FBTweet *fakeTweet = [[FBTweet alloc] init];
+        //fakeTweet.tweetUser = user;
+        //[userDetailsViewController setTweet:fakeTweet];
+        [self.navigationController pushViewController:userDetailsViewController animated:YES];
+    };
     
     // On retourne la cellule au tableView pour qu'il puisse l'afficher
     return cell;
