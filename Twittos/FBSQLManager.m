@@ -77,7 +77,7 @@
      retweetUserID INTEGER DEFAULT NULL)"];
     
     [self.database executeUpdate:@"CREATE TABLE IF NOT EXISTS tweetLinksTable (\
-     tweetIDAndRowIndex TEXT PRIMARY KEY DEFAULT NULL, \
+     tweetLinkID TEXT PRIMARY KEY DEFAULT NULL, \
      userID TEXT DEFAULT NULL, \
      startIndice INTEGER DEFAULT NULL, \
      endIndice INTEGER DEFAULT NULL)"];
@@ -151,6 +151,11 @@
     }
     
     [self addUserInDatabase:(tweet.tweetUser)];
+    
+    if(tweet.tweetLinks.count)
+    {
+        [self addtweetLinksInDatabase:tweet.tweetLinks forTweetID:tweet.tweetID];
+    }
     
     if(tweet.retweetedStatus)
     {
@@ -254,7 +259,7 @@
 
 -(NSArray *)getAllTweets
 {
-    NSMutableArray *tweets;
+    NSMutableArray *tweets = [[NSMutableArray alloc] init];
     
     FMResultSet *set = [self.database executeQuery:@"SELECT tweetID FROM tweetsTable"];
     while([set next])
@@ -262,7 +267,8 @@
         if(![self hasTweetInDatabaseWithRetweetedStatusIDEqualTo:[set stringForColumn:@"tweetID"]])
         {
             FBTweet *tweet = [self getTweetForTweetID:[set stringForColumn:@"tweetID"]];
-            [tweets addObject:tweet];
+            [tweets insertObject:tweet atIndex:0];
+            //[tweets addObject:tweet];
         }
     }
     [set close];
@@ -312,7 +318,7 @@
          userDescription, \
          userWebSite, \
          userImageURL, \
-         userBackgroundImageURL \
+         userBackgroundImageURL) \
          VALUES (?,?,?,?,?,?,?,?,?,?,?)"
                               values:@[user.userID,
                                        (@(user.userFollowersCount) ?: [NSNull null]),
@@ -360,7 +366,7 @@
     
     BOOL itemExists = NO;
     
-    FMResultSet *set = [self.database executeQuery:@"SELECT tweetIDAndRowIndex FROM tweetLinksTable WHERE tweetIDAndRowIndex=?"
+    FMResultSet *set = [self.database executeQuery:@"SELECT tweetLinkID FROM tweetLinksTable WHERE tweetIDAndRowIndex=?"
                                             values:@[tweetLinkID]
                                              error:NULL];
     if ([set next]) {
@@ -375,7 +381,9 @@
                    forTweetID:(NSString *)tweetID
 {
     if(!tweetID)
+    {
         return;
+    }
     int i = 0;
     
     for (FBTweetLink *tweetLink in tweetLinks)
@@ -387,17 +395,18 @@
         if(![self hastweetLinkInDatabase:tweetLink forTweetID:tweetID andRowInTweet:i])
         {
             [self.database executeUpdate:@"INSERT INTO tweetLinksTable \
-             (tweetIDAndRowIndex, \
+             (tweetLinkID, \
              userID, \
              startIndice, \
-             endIndice \
+             endIndice) \
              VALUES (?,?,?,?)"
                                   values:@[tweetLinkID,
-                                           [@(tweetLink.userID) stringValue],
+                                           tweetLink.userID,
                                            (@([tweetLink.indices[0] integerValue]) ?: [NSNull null]),
                                            (@([tweetLink.indices[1] integerValue]) ?: [NSNull null]),
                                            ]error:NULL];
         }
+        i = i+1;
     }
 }
 
@@ -407,25 +416,32 @@
     if(!tweetID.length)
         return nil;
     
-    NSMutableArray *tweetLinks;
+    NSMutableArray *tweetLinks = [[NSMutableArray alloc] init];
     
-    for(int i=0;linksCount;i++)
+    for(int i=0;i<linksCount;i++)
     {
         NSString *tweetLinkID = [tweetID stringByAppendingString:[@(i) stringValue]];
 
         FBTweetLink *tweetLink;
         
-        FMResultSet *set = [self.database executeQuery:@"SELECT * FROM tweetLinksTable WHERE tweetIDAndRowIndex=?"
+        FMResultSet *set = [self.database executeQuery:@"SELECT * FROM tweetLinksTable WHERE tweetLinkID=?"
                                                 values:@[tweetLinkID]
                                                  error:NULL];
         if ([set next]) {
             tweetLink = [[FBTweetLink alloc] initWithResultSet:set];
             [tweetLinks addObject:tweetLink];
         }
+        [set close];
     }
     
     return tweetLinks;
 }
 
+
+/*@"CREATE TABLE IF NOT EXISTS tweetLinksTable (\
+tweetIDAndRowIndex TEXT PRIMARY KEY DEFAULT NULL, \
+userID TEXT DEFAULT NULL, \
+startIndice INTEGER DEFAULT NULL, \
+endIndice INTEGER DEFAULT NULL)"];*/
 
 @end

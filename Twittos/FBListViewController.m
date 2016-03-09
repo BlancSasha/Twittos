@@ -72,6 +72,7 @@
             NSLog(@"Error %@; %@", error, [error localizedDescription]);
             
             NSArray *SQLtweets = [[FBSQLManager sharedSQLManager] getAllTweets];
+            NSLog(@"SQLTweets :%@",SQLtweets.description);
             [self setTweets:SQLtweets];
         }
         else

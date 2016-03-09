@@ -14,7 +14,7 @@
 
 @interface FBTweetLink : MTLModel <MTLJSONSerializing>
 
-@property (nonatomic) NSInteger userID;
+@property (strong, nonatomic) NSString *userID;
 @property (strong, nonatomic) NSMutableArray *indices;
 
 -(NSString *)getUserID;

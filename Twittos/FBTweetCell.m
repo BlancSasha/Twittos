@@ -167,7 +167,7 @@
             /*[attrText addAttribute:NSForegroundColorAttributeName
                              value:[UIColor blueColor]
                              range:NSMakeRange(start,length)];*/
-            NSString *value = [[NSString alloc] initWithFormat:@"userID%@",[@(tweetLink.userID) stringValue]];
+            NSString *value = [[NSString alloc] initWithFormat:@"userID%@",tweetLink.userID];
             
             [attrText addAttribute:NSLinkAttributeName
                              value:value
@@ -186,7 +186,7 @@
            /* [attrText addAttribute:NSForegroundColorAttributeName
                              value:[UIColor blueColor]
                              range:NSMakeRange(start,length)];*/
-            NSString *value = [[NSString alloc] initWithFormat:@"userID%@",[@(tweetLink.userID) stringValue]];
+            NSString *value = [[NSString alloc] initWithFormat:@"userID%@",tweetLink.userID];
             [attrText addAttribute:NSLinkAttributeName
                              value:value
                              range:NSMakeRange(start,length)];
@@ -276,7 +276,7 @@ static FBTweetCell *sizingCell;
     CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:CGSizeMake(width, 1000.)
                                         withHorizontalFittingPriority:UILayoutPriorityRequired
                                               verticalFittingPriority:UILayoutPriorityFittingSizeLevel];
-    NSLog(@"%@", NSStringFromCGSize(size));
+    //NSLog(@"%@", NSStringFromCGSize(size));
     return size.height + 1;
 }
 

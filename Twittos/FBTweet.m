@@ -39,14 +39,14 @@
         self.text = [set stringForColumn:@"tweetText"];
         self.retweetCount = [[set stringForColumn:@"retweetCount"] integerValue];
         self.likes = [[set stringForColumn:@"likes"] integerValue];
-        self.coordinates[0][0] = [set stringForColumn:@"coordinateLongitude1"];
-        self.coordinates[0][1] = [set stringForColumn:@"coordinateLatitude1"];
-        self.coordinates[1][0] = [set stringForColumn:@"coordinateLongitude2"];
-        self.coordinates[1][1] = [set stringForColumn:@"coordinateLatitude2"];
-        self.coordinates[2][0] = [set stringForColumn:@"coordinateLongitude3"];
-        self.coordinates[2][1] = [set stringForColumn:@"coordinateLatitude3"];
-        self.coordinates[3][0] = [set stringForColumn:@"coordinateLongitude4"];
-        self.coordinates[3][1] = [set stringForColumn:@"coordinateLatitude4"];
+        self.coordinates[0][0][0] = [set stringForColumn:@"coordinateLongitude1"];
+        self.coordinates[0][0][1] = [set stringForColumn:@"coordinateLatitude1"];
+        self.coordinates[0][1][0] = [set stringForColumn:@"coordinateLongitude2"];
+        self.coordinates[0][1][1] = [set stringForColumn:@"coordinateLatitude2"];
+        self.coordinates[0][2][0] = [set stringForColumn:@"coordinateLongitude3"];
+        self.coordinates[0][2][1] = [set stringForColumn:@"coordinateLatitude3"];
+        self.coordinates[0][3][0] = [set stringForColumn:@"coordinateLongitude4"];
+        self.coordinates[0][3][1] = [set stringForColumn:@"coordinateLatitude4"];
         self.tweetDate = [[NSDate alloc] initWithTimeIntervalSince1970:[[set stringForColumn:@"date"] doubleValue]];
         self.tweetMedias[0].tweetImageContentURL = [set stringForColumn:@"tweetContentImageURL"];
     }

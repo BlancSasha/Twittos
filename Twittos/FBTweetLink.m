@@ -13,14 +13,14 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"userID":@"id",
+             @"userID":@"id_str",
              @"indices":@"indices",
              };
 }
 
 -(NSString *)getUserID
 {
-    return [@(self.userID) stringValue];
+    return self.userID;
 }
 
 
@@ -29,7 +29,7 @@
     self = [super init];
     if (self)
     {
-        self.userID = [[set stringForColumn:@"userID"] integerValue];
+        self.userID = [set stringForColumn:@"userID"];
         self.indices[0] = [set stringForColumn:@"startIndice"];
         self.indices[1] = [set stringForColumn:@"endIndice"];
     }
