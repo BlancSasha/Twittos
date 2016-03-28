@@ -10,10 +10,7 @@
 #import "FBTweet.h"
 #import "FBUser.h"
 
-//#import "AFNetworking.h"
-
-#import "AFHTTPRequestOperationManager.h"
-#import "AFHTTPRequestOperation.h"
+#import "AFNetworking.h"
 
 #import "Mantle.h"
 
@@ -27,10 +24,8 @@
 
 @property (nonatomic, strong) NSString *bearerToken;
 
-@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
-
-@property (nonatomic, strong) AFHTTPRequestOperationManager *imageManager;
-
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
+@property (nonatomic, strong) AFHTTPSessionManager *imageManager;
 
 @end
 
@@ -42,15 +37,12 @@
     self = [super init];
     
     if(self){
-        //NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        //self.manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-        self.manager = [AFHTTPRequestOperationManager manager];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        self.manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
         [self.manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
         [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
         
-        //NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        //self.imageManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-        self.imageManager = [AFHTTPRequestOperationManager manager];
+        self.imageManager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
         [self.imageManager setResponseSerializer:[AFImageResponseSerializer serializer]];
         [self.imageManager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     }
@@ -68,31 +60,15 @@
 
 - (void) fetchTweetswithBlock:(void(^)(NSArray *,NSError *))block
 {
-   /* if(!self.bearerToken)
-    {
-        
-    [self authenticationWithencoded64authorizationHeader:encoded64authorizationHeader
-                                                andBlock:^(NSString *bearerToken, NSError *err) {
-                                                    
-        if (err)
-        {
-            NSLog(@"Error : %@",err);
-            block(nil,err);
-        }
-        else
-        {
-
-        */
     NSDictionary *getParameters = @{@"screen_name":@"syan_me",
                                     @"count":@(TWEETS_COUNT),
                                     };
     
     [self.manager GET:@"https://api.twitter.com/1.1/statuses/user_timeline.json"
            parameters:getParameters
-              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-                  
-                  NSLog(@"JSON : %@",operation.responseString);
-                  
+             progress:nil
+              success:^(NSURLSessionTask * _Nonnull task, id  _Nonnull responseObject) {
+
                   NSError *err = nil;
                   
                   NSArray *tweets = [MTLJSONAdapter modelsOfClass:[FBTweet class] fromJSONArray:responseObject error:&err];
@@ -102,10 +78,11 @@
                   else
                       block(tweets,nil);
                   
-              } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+              } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nonnull error) {
                   
-                  // pas authentifié
-                  if (operation.response.statusCode == 400 || operation.response.statusCode == 401)
+                  NSInteger statusCode = ((NSHTTPURLResponse *)task.response).statusCode; //pas authentifié
+                  
+                  if(statusCode == 400 || statusCode == 401)
                   {
                       [self authenticationWithBlock:^(NSError *error) {
                           if (error)
@@ -134,7 +111,10 @@
     
     [self.manager.requestSerializer setValue:postHeader forHTTPHeaderField:@"Authorization"];
     
-    [self.manager POST:@"https://api.twitter.com/oauth2/token" parameters:postParameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+    [self.manager POST:@"https://api.twitter.com/oauth2/token"
+            parameters:postParameters
+             progress :nil
+               success:^(NSURLSessionTask * _Nonnull task, id  _Nonnull responseObject) {
         
         //NSLog(@"JSON : %@",responseObject);
         
@@ -150,7 +130,7 @@
         authentBlock(nil);
 
         
-    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"Error : %@",error);
         authentBlock (error);
     }];
@@ -162,9 +142,10 @@
     
     [self.manager GET:@"https://api.twitter.com/1.1/users/show.json"
            parameters:getParameters
-              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+             progress:nil
+              success:^(NSURLSessionTask * _Nonnull task, id  _Nonnull responseObject) {
                   
-                  NSLog(@"JSON : %@",operation.responseString);
+                  NSLog(@"JSON : %@",task.response);
                   
                   NSError *err = nil;
                   
@@ -175,7 +156,7 @@
                   else
                       block(user,nil);
                   
-              } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+              } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nonnull error) {
                   NSLog(@"Error : %@",error);
                   block(nil,error);
               }];
@@ -184,12 +165,13 @@
 - (void) downloadImageWithURL:(NSString *)imageURL withBlock:(void(^)(UIImage *,NSString *,NSError *))imageBlock{
     [self.imageManager GET:imageURL
                 parameters:nil
-                   success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
+                  progress:nil
+                   success:^(NSURLSessionTask * _Nonnull task, id  _Nonnull responseObject)
     {
-        NSLog(@"%@",responseObject);
+        NSLog(@"%@",task.response);
         imageBlock(responseObject,imageURL,nil);
                        
-    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error)
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nonnull error)
     {
         NSLog(@"%@",error);
         imageBlock(nil,nil,error);

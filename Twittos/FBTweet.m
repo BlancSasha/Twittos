@@ -53,27 +53,26 @@
     return self;
 }
 
+-(instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super init];
+    if (self)
+    {
+        self.tweetID = [coder decodeObjectForKey:@"myString"];
+    }
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+    
+}
 
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"<%@: %p, text: %@, retweetCount: %i, likes : %i, tweetLinks : %@>",
             self.class, self, self.text, self.retweetCount, self.likes, self.tweetLinks];
 }
-
-/*+(Class)classForParsingJSONDictionary:(NSDictionary *)JSONDictionary
-{
-    if (JSONDictionary[@"entities.media.media_url_https"] != nil)
-    {
-        return FBTweetImage.class;
-    }
-    
-    return self;
-}
-
-+ (NSValueTransformer *)tweetContentImageJSONTransformer
-{
-    return [MTLJSONAdapter dictionaryTransformerWithModelClass:[FBTweetImage class]];
-}*/
 
 +(NSValueTransformer *)tweetMediasJSONTransformer
 {

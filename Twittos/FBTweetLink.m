@@ -29,9 +29,11 @@
     self = [super init];
     if (self)
     {
+        self.indices = [[NSMutableArray alloc] init];
+        
         self.userID = [set stringForColumn:@"userID"];
-        self.indices[0] = [set stringForColumn:@"startIndice"];
-        self.indices[1] = [set stringForColumn:@"endIndice"];
+        self.indices[0] = @([set intForColumn:@"startIndice"]);
+        self.indices[1] = @([set intForColumn:@"endIndice"]);
     }
     return self;
 }

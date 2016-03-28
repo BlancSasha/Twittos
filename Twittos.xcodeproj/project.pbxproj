@@ -12,6 +12,7 @@
 		C90B9D871C3C2EEC001EBD0D /* FBTweetImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C90B9D861C3C2EEC001EBD0D /* FBTweetImage.m */; };
 		C91AEF1A1C16C594002BFBBC /* FBTweetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C91AEF191C16C594002BFBBC /* FBTweetManager.m */; };
 		C91AEF201C16C734002BFBBC /* FBTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = C91AEF1F1C16C734002BFBBC /* FBTweet.m */; };
+		C91BCE111C98A6B000FC94AA /* FBYapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C91BCE101C98A6B000FC94AA /* FBYapManager.m */; };
 		C94C0E631C26E8C1009B5DD9 /* FBTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C94C0E621C26E8C1009B5DD9 /* FBTweetCell.m */; };
 		C94C0E661C26FCF1009B5DD9 /* FBTweetLink.m in Sources */ = {isa = PBXBuildFile; fileRef = C94C0E651C26FCF1009B5DD9 /* FBTweetLink.m */; };
 		C94C0E691C285D89009B5DD9 /* FBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C94C0E681C285D89009B5DD9 /* FBUser.m */; };
@@ -38,6 +39,8 @@
 		C91AEF191C16C594002BFBBC /* FBTweetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweetManager.m; sourceTree = "<group>"; };
 		C91AEF1E1C16C734002BFBBC /* FBTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweet.h; sourceTree = "<group>"; };
 		C91AEF1F1C16C734002BFBBC /* FBTweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweet.m; sourceTree = "<group>"; };
+		C91BCE0F1C98A6B000FC94AA /* FBYapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBYapManager.h; sourceTree = "<group>"; };
+		C91BCE101C98A6B000FC94AA /* FBYapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBYapManager.m; sourceTree = "<group>"; };
 		C94C0E611C26E8C1009B5DD9 /* FBTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweetCell.h; sourceTree = "<group>"; };
 		C94C0E621C26E8C1009B5DD9 /* FBTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTweetCell.m; sourceTree = "<group>"; };
 		C94C0E641C26FCF1009B5DD9 /* FBTweetLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTweetLink.h; sourceTree = "<group>"; };
@@ -95,6 +98,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C91BCE121C9B54F500FC94AA /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				C91AEF1E1C16C734002BFBBC /* FBTweet.h */,
+				C91AEF1F1C16C734002BFBBC /* FBTweet.m */,
+				C90B9D851C3C2EEC001EBD0D /* FBTweetImage.h */,
+				C90B9D861C3C2EEC001EBD0D /* FBTweetImage.m */,
+				C94C0E641C26FCF1009B5DD9 /* FBTweetLink.h */,
+				C94C0E651C26FCF1009B5DD9 /* FBTweetLink.m */,
+				C94C0E671C285D89009B5DD9 /* FBUser.h */,
+				C94C0E681C285D89009B5DD9 /* FBUser.m */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
 		C9766C131BDE9EF00055ECEA = {
 			isa = PBXGroup;
 			children = (
@@ -138,26 +156,21 @@
 		C978BAB41BDEA2C300DA98A7 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				C91BCE121C9B54F500FC94AA /* Objects */,
 				C9B47C7E1C882ACD00745C19 /* FBWebViewController.h */,
 				C9B47C7F1C882ACD00745C19 /* FBWebViewController.m */,
 				C90790681C6C7A8200D3BF3D /* FBSQLManager.h */,
 				C90790691C6C7A8200D3BF3D /* FBSQLManager.m */,
+				C91BCE0F1C98A6B000FC94AA /* FBYapManager.h */,
+				C91BCE101C98A6B000FC94AA /* FBYapManager.m */,
 				C978BAAE1BDEA2A200DA98A7 /* FBListViewController.h */,
 				C978BAAF1BDEA2A200DA98A7 /* FBListViewController.m */,
 				C978BAB11BDEA2B900DA98A7 /* FBDetailsViewController.h */,
 				C978BAB21BDEA2B900DA98A7 /* FBDetailsViewController.m */,
 				C91AEF181C16C594002BFBBC /* FBTweetManager.h */,
 				C91AEF191C16C594002BFBBC /* FBTweetManager.m */,
-				C91AEF1E1C16C734002BFBBC /* FBTweet.h */,
-				C91AEF1F1C16C734002BFBBC /* FBTweet.m */,
-				C90B9D851C3C2EEC001EBD0D /* FBTweetImage.h */,
-				C90B9D861C3C2EEC001EBD0D /* FBTweetImage.m */,
 				C94C0E611C26E8C1009B5DD9 /* FBTweetCell.h */,
 				C94C0E621C26E8C1009B5DD9 /* FBTweetCell.m */,
-				C94C0E641C26FCF1009B5DD9 /* FBTweetLink.h */,
-				C94C0E651C26FCF1009B5DD9 /* FBTweetLink.m */,
-				C94C0E671C285D89009B5DD9 /* FBUser.h */,
-				C94C0E681C285D89009B5DD9 /* FBUser.m */,
 				C9A3ED571C34587300B53948 /* FBImageManager.h */,
 				C9A3ED581C34587300B53948 /* FBImageManager.m */,
 				C97B038A1C5EB513005D6EC6 /* FBImageViewer.h */,
@@ -295,6 +308,7 @@
 				C907906A1C6C7A8200D3BF3D /* FBSQLManager.m in Sources */,
 				C978BAB31BDEA2B900DA98A7 /* FBDetailsViewController.m in Sources */,
 				C9766C211BDE9EF00055ECEA /* main.m in Sources */,
+				C91BCE111C98A6B000FC94AA /* FBYapManager.m in Sources */,
 				C94C0E691C285D89009B5DD9 /* FBUser.m in Sources */,
 				C90B9D871C3C2EEC001EBD0D /* FBTweetImage.m in Sources */,
 				C9DFA73A1C6A5C4B006CD7BF /* FBScrollViewCentered.m in Sources */,

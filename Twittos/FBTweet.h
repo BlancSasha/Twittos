@@ -15,7 +15,7 @@
 @class FBUser;
 @class FMResultSet;
 
-@interface FBTweet : MTLModel <MTLJSONSerializing>
+@interface FBTweet : MTLModel <MTLJSONSerializing, NSCoding>
 
 @property (strong, nonatomic) NSString *tweetID;
 @property (strong, nonatomic) NSString *text;

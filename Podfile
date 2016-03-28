@@ -3,10 +3,15 @@ platform :ios, '8.0'
 inhibit_all_warnings!
 
 pod 'Masonry'
-pod 'AFNetworking', '~> 2.6.3'
+pod 'AFNetworking'
 pod 'INTULocationManager'
 pod 'Mantle'
 pod 'JGProgressHUD'
+pod 'YapDatabase'
+pod 'DateTools'
+pod 'BlocksKit'
+
+
 
 pod 'FMDB'
 # pod 'FMDB/FTS'   # FMDB with FTS

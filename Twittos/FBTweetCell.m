@@ -10,6 +10,7 @@
 
 #import "Masonry.h"
 #import "QuartzCore/QuartzCore.h"
+#import "DateTools.h"
 
 #import "FBTweet.h"
 #import "FBTweetLink.h"
@@ -22,6 +23,7 @@
 @interface FBTweetCell () <FBImageManagerDelegate>
 
 @property (strong, nonatomic) UILabel *tweetLabel;
+@property (strong, nonatomic) UILabel *dateLabel;
 @property (strong, nonatomic) UIImageView *userImageView;
 @property (strong, nonatomic) UIImageView *tweetMediaView;
 @property (strong, nonatomic) UITextView *tweetTextView;
@@ -51,7 +53,12 @@
         [self.contentView addSubview:self.tweetLabel];
         self.tweetLabel.numberOfLines = 0;
         self.tweetLabel.lineBreakMode = NSLineBreakByWordWrapping;
-       
+
+        self.dateLabel = [[UILabel alloc] init];
+        [self.contentView addSubview:self.dateLabel];
+        self.dateLabel.numberOfLines = 0;
+        self.dateLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        
         self.tweetMediaView = [[UIImageView alloc] init];
         [self.tweetMediaView setBackgroundColor:[UIColor grayColor]];
         self.tweetMediaView.contentMode = UIViewContentModeScaleAspectFill;
@@ -153,6 +160,11 @@
                                     attributes:@{NSForegroundColorAttributeName:[UIColor grayColor],
                                                  NSFontAttributeName:[UIFont systemFontOfSize:14]}];
     
+    NSAttributedString *attrDateText =
+    [[NSAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@"%@\n", [tweet.tweetDate formattedDateWithStyle:NSDateFormatterFullStyle]]
+                                    attributes:@{NSForegroundColorAttributeName:[UIColor grayColor],
+                                                 NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+    
     NSMutableAttributedString *attrText = [NSMutableAttributedString alloc];
     
     if(tweet.retweetedStatus){
@@ -217,6 +229,7 @@
     NSMutableAttributedString *attrTweet = [[NSMutableAttributedString alloc] init];
     [attrTweet appendAttributedString:attrName];
     [attrTweet appendAttributedString:attrScreenName];
+    [attrTweet appendAttributedString:attrDateText];
     [attrTweet appendAttributedString:attrText];
  
     [self.tweetLabel setAttributedText:attrTweet];

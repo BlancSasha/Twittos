@@ -10,8 +10,10 @@
 #import "FBDetailsViewController.h"
 #import "FBImageViewer.h"
 #import "FBSQLManager.h"
+#import "FBYapManager.h"
 
 #import <JGProgressHUD/JGProgressHUD.h>
+#import "A2DynamicDelegate.h"
 
 #import "FBTweetCell.h"
 
@@ -69,16 +71,44 @@
         
         if (error)
         {
-            NSLog(@"Error %@; %@", error, [error localizedDescription]);
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Database System"
+                                                            message:@"The system seems to be offline. Choose which system of database you would like to use :"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Yapdatabase"
+                                                  otherButtonTitles:@"FMDB", nil];
             
-            NSArray *SQLtweets = [[FBSQLManager sharedSQLManager] getAllTweets];
-            NSLog(@"SQLTweets :%@",SQLtweets.description);
-            [self setTweets:SQLtweets];
+            // Get the dynamic delegate
+            A2DynamicDelegate *dd = alertView.bk_dynamicDelegate;
+            
+            // Implement -alertViewShouldEnableFirstOtherButton:
+            [dd implementMethod:@selector(alertViewShouldEnableFirstOtherButton:) withBlock:^(UIAlertView *alertView) {
+                return YES;
+            }];
+            
+            // Implement -alertView:willDismissWithButtonIndex:
+            [dd implementMethod:@selector(alertView:willDismissWithButtonIndex:) withBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                
+                if(buttonIndex == 0)
+                {
+                    NSArray *yapTweets = [[FBYapManager sharedYapManager] getAllTweets];
+                     NSLog(@"yapTweets :%@",yapTweets.description);
+                     [self setTweets:yapTweets];
+                }else{
+                    NSArray *SQLtweets = [[FBSQLManager sharedSQLManager] getAllTweets];
+                     NSLog(@"SQLTweets :%@",SQLtweets.description);
+                     [self setTweets:SQLtweets];
+                }
+            }];
+            
+            alertView.delegate = dd;
+            [alertView show];
+            //NSLog(@"Error %@; %@", error, [error localizedDescription]);
         }
         else
         {
             [self setTweets:tweets];
             [[FBSQLManager sharedSQLManager] addTweetsInDatabase:tweets];
+            [[FBYapManager sharedYapManager] addTweetsInDatabase:tweets];
         }
         
         [HUD dismiss];

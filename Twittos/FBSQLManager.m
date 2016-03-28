@@ -236,14 +236,7 @@
         if([set stringForColumn:@"retweetedStatusID"])
             
         {
-            FMResultSet *retweetSet = [self.database executeQuery:@"SELECT * FROM tweetsTable WHERE tweetID=?"
-                                                    values:@[[set stringForColumn:@"retweetedStatusID"]]
-                                                     error:NULL];
-            if ([retweetSet next]) {
-                tweet.retweetedStatus = [[FBTweet alloc] initWithResultSet:set];
-                tweet.retweetedStatus.tweetUser = [self getUserForUserID:[set stringForColumn:@"tweetUserID"]];
-            }
-                [retweetSet close];
+            tweet.retweetedStatus = [self getTweetForTweetID:[set stringForColumn:@"retweetedStatusID"]];
         }
         NSInteger numberOfUserMentions= [[set stringForColumn:@"numberOfUserMention"] integerValue];
         if(numberOfUserMentions)
@@ -366,7 +359,7 @@
     
     BOOL itemExists = NO;
     
-    FMResultSet *set = [self.database executeQuery:@"SELECT tweetLinkID FROM tweetLinksTable WHERE tweetIDAndRowIndex=?"
+    FMResultSet *set = [self.database executeQuery:@"SELECT tweetLinkID FROM tweetLinksTable WHERE tweetLinkID=?"
                                             values:@[tweetLinkID]
                                              error:NULL];
     if ([set next]) {
